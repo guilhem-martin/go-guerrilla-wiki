@@ -1,6 +1,6 @@
 Welcome to the go-guerrilla wiki!
 
-See [Readme.md](https://github.com/flashmob/go-guerrilla) for details.
+See [Readme.md](https://github.com/flashmob/go-guerrilla) for information about the project.
 
 
 # Dev Environment.
