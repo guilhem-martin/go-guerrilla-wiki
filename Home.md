@@ -13,4 +13,6 @@ If you're using InteliJ IDEA for your IDE with the Go plugin, you may be able to
 
 ![InteliJ Idea debuger config for Golang](https://raw.githubusercontent.com/wiki/flashmob/go-guerrilla/go-guerrilla-debug.png)
 
+(Note: for the program arguments, add `-c goguerrilla.debug.conf` - if you want the debugging session to use a different config file)
+
 Happy debuggin'
