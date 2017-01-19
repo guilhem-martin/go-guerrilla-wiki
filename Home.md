@@ -17,7 +17,7 @@ If you're using InteliJ IDEA for your IDE with the Go plugin, you may be able to
 
 Happy debuggin'
 
-# Limitations
+# Server Limitations
 
 ## Size extension
 
