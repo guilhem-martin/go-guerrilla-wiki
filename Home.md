@@ -2,6 +2,9 @@ Welcome to the go-guerrilla wiki!
 
 See [Readme.md](https://github.com/flashmob/go-guerrilla) for information about the project.
 
+# Testing
+* [Fuzz Testing](https://github.com/flashmob/go-guerrilla/wiki/Fuzz-testing)
+
 
 # Dev Environment
 
@@ -32,5 +35,7 @@ See more discussion about SIZE https://cr.yp.to/smtp/size.html
 ## On buffering & pooling
 
 https://gist.github.com/colm-mchugh/ee3b0b7b062a235a871b - source examples 
+
 https://elithrar.github.io/article/using-buffer-pools-with-go/ - nice writeup about Sized buffer pools 
+
 https://github.com/djherbis/buffer - composite buffers (the unbounded bounder could be really useful, the ring buffer is interesting
