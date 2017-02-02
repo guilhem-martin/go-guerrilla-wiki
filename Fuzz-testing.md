@@ -2,6 +2,7 @@
 
 For further improving the stability of the software, some simple fuzz testing was implemented.
 This is making usage of the [go-fuzz](https://github.com/dvyukov/go-fuzz) package and can easily be performed.
+The tests itself are all in the *fuzz.go* file.
 
 ## Preperations
 
@@ -46,5 +47,10 @@ This will run for quite a while. Eventually you will get an output that contains
 
 You can investigate on those crashes looking at the *.output* files in the *workdir/crashers* folder.
 
+## Further improvements
 
+Currently we just do fuzz testing on a very high level: We spin up the server, wait for the greeting
+and issue the command created by *go-fuzz*. For future improvements, this fuzzing should be made against
+more atomic functions, e.g. the handling of commands. This would need some changes on the server code
+itself and is due to upcoming refactoring.
 
