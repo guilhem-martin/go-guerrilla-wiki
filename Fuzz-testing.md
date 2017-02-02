@@ -11,8 +11,10 @@ The tests itself are all in the *fuzz.go* file.
 We do have an extra branch for this, as not everyone needs the extended code for just running the software.
 Please checkout the branch *tests* for this:
 
-`$ git checkout tests
-$ git pull`
+
+    $ git checkout tests
+
+    $ git pull
 
 We try to keep the branch up to date with the *master* branch.
 
@@ -20,8 +22,8 @@ We try to keep the branch up to date with the *master* branch.
 
 If you don’t have *go-fuzz* already installed, do that now.
 
-`$ go get github.com/dvyukov/go-fuzz/go-fuzz
-$ go get github.com/dvyukov/go-fuzz/go-fuzz-build`
+    $ go get github.com/dvyukov/go-fuzz/go-fuzz
+    $ go get github.com/dvyukov/go-fuzz/go-fuzz-build
 
 Build the packages and you should get the *go-fuzz* as well as the *go-fuzz-build* tools.
 
