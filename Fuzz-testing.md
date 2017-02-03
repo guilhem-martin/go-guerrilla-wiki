@@ -25,7 +25,8 @@ If you don’t have *go-fuzz* already installed, do that now.
     $ go get github.com/dvyukov/go-fuzz/go-fuzz
     $ go get github.com/dvyukov/go-fuzz/go-fuzz-build
 
-Build the packages and you should get the *go-fuzz* as well as the *go-fuzz-build* tools.
+Build the packages and you should get the *go-fuzz* as well as the *go-fuzz-build* tools. 
+(Assuming `go get` will build these automatically and leave them in `$GOPATH/bin`)
 
 ### Corpus files
 
