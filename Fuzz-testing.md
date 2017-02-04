@@ -55,7 +55,7 @@ After everything is prepared you can start. Build the package with *go-fuzz*:
 This will take a while and create a file named *guerrilla-fuzz.zip*
 Now the fuzzing process itself can be started:
 
-`$ go-fuzz -bin=guerrilla-fuzz.zip -workdir=workdir -procs=1000`
+`$ go-fuzz -bin=guerrilla-fuzz.zip -workdir=workdir -procs=250`
 
 This will run for quite a while. Eventually you will get an output that contains *crashers*.
 
