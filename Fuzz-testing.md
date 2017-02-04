@@ -143,3 +143,16 @@ func Fuzz(data []byte) int {
 }
 ```
 
+## Crash reports and fixing them
+
+
+
+The crash reports are dumped in the workdir/crashes dir
+These become data for your automated test cases. 
+It's best to create a test that works the same way as the fuzz function, but feeds the crash report data directly.
+
+Crash reports contain binary input, or ASCII input if it's quoted. If binary, then perhaps it can be base64 encoded if you want to include with your rest case. Eg, to encode a binary file:
+
+`$ cat workdir/crashers/21c56f89989d19c3bbbd81b288b2dae9e6dd2150 | base64 > encoded.data.txt`
+
+Once you run your test, it should crash. Then fix the code so the test won't crash :-)
