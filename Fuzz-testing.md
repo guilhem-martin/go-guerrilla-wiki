@@ -35,12 +35,13 @@ the *corpus* folder. This contains some files that are used to initate the fuzzi
 You are very welcome to create further corpus files, the ones we use are the example smtp files of the
 go-fuzz package.
 
-## Creating corpus files
+## Generating your own corpus files
 
-See fuzz_test.go - run the TestGenerateCorpus test by itself to generate the corpus files, or add additional files there. The reason why a program is used to generate is because sometimes we can't use the text editor to insert non-printable characters that we want. For example, SMTP likes to have CR + LF at the end. To run TestGenerateCorpus by itself:
+See fuzz_test.go - run the TestGenerateCorpus test by itself to generate the corpus files, or add additional files there. The reason why a program is used to generate the corpus was because we couldn't use the text editor to insert non-printable characters that we want. For example, SMTP likes to have CR + LF at the end. To run TestGenerateCorpus by itself:
 
 `go test -v github.com/flashmob/go-guerrilla -run ^TestGenerateCorpus$`
 
+The go-fuzz program will also generate its own corpus files during execution and leave them there so that it can resume the tests from where it left.
 
 ## Putting it together
 
@@ -51,13 +52,30 @@ After everything is prepared you can start. Build the package with *go-fuzz*:
 This will take a while and create a file named *guerrilla-fuzz.zip*
 Now the fuzzing process itself can be started:
 
-`$ go-fuzz -bin=guerrilla-fuzz.zip -workdir=workdir -proc=1000`
+`$ go-fuzz -bin=guerrilla-fuzz.zip -workdir=workdir -procs=1000`
 
 This will run for quite a while. Eventually you will get an output that contains *crashers*.
 
 You can investigate on those crashes looking at the *.output* files in the *workdir/crashers* folder.
 
 ## Fuzz Function details
+
+So here is our initial Fuzz function below. The go-fuzz program tries to re-use the function without
+restarting, which means we can initialize the server once, and then use the client pool to re-use our clients to speed things up. So we setup using the [init function](https://golang.org/doc/effective_go.html#init) function in fuzz.go.
+
+
+
+When you run the go-fuzz program, it will print out statistics every second.
+eg.
+
+`2017/02/05 02:30:16 slaves: 500, corpus: 336 (1m17s ago), crashers: 2, restarts: 1/1490, execs: 1761505 (12490/sec), cover: 1040, uptime: 2m21s`
+
+What you want is a Fuzz function that has a high 'cover' number, and a low restart rate. You can see that with 500 clients, it can execute 12490 times per second! See go-fuzz readme for more details about these statistics.
+
+Our function doesn't use a real TCP connection, it uses a mock connection which consists of 2 pipes. We are the client end of the pipe. For each call to Fuzz() we borrow a client from the pool, which may be recycled after.
+Next, we read the greeting from the server. After the greeting, we use io.Copy to inject raw input 
+from the fuzzer to the server. We wait a little for the server to process the input, if we see that the server buffered something, try to read something, but don't block. 
+
 
 ```go
 
@@ -100,6 +118,7 @@ func Fuzz(data []byte) int {
 		fmt.Println("Read", n, string(b))
 	}
 
+
 	// Feed the connection with fuzz data (we are the _client_ end of the connection)
 	if _, err = io.Copy(conn.Client, bytes.NewReader(data)); err != nil {
 		return 0
@@ -108,32 +127,19 @@ func Fuzz(data []byte) int {
 	// allow handleClient to process
 	time.Sleep(time.Millisecond + 10)
 
-	for {
-		if mockClient.bufout.Buffered() == 0 {
-			break
-		}
 
-		b = make([]byte, 1024)
-		if n, err := conn.Client.Read(b); err != nil {
-			if isFuzzDebug {
-				fmt.Println(string(b), err)
-			}
-			return 1
-		} else if isFuzzDebug {
-			if isFuzzDebug {
-				fmt.Println("Read", n, string(b))
-			}
-		}
-		// allow handleClient to process
-		time.Sleep(time.Millisecond + 10)
-		if isFuzzDebug {
-			fmt.Println("buffered:", mockClient.bufout.Buffered())
-		}
-
+	if mockClient.bufout.Buffered() == 0 {
+		// nothing to read - no complete commands sent?
+		return 0
 	}
+	if n, err := conn.Client.Read(b); err != nil {
+		return 0
+	} else if isFuzzDebug {
+		fmt.Println("Read", n, string(b))
+	}
+
 
 	return 1
 }
-
 
 ```
