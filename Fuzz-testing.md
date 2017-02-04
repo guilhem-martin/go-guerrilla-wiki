@@ -4,11 +4,14 @@ For further improving the stability of the software, some simple fuzz testing wa
 This is making usage of the [go-fuzz](https://github.com/dvyukov/go-fuzz) package and can easily be performed.
 The tests itself are all in the *fuzz.go* file.
 
-## Preperations
+## Preparations
 
 ### Branches
 
-We do have an extra branch for this, as not everyone needs the extended code for just running the software.
+[Test Branch](https://github.com/flashmob/go-guerrilla/blob/tests/)
+
+We have the above branch for this, as not everyone needs to run the fuzz tests, and there's a lot specific files.
+
 Please checkout the branch *tests* for this:
 
 
@@ -31,7 +34,7 @@ Build the packages and you should get the *go-fuzz* as well as the *go-fuzz-buil
 ### Corpus files
 
 If you have pulled the recent *tests* branch you should now also have the *workdir* and within that
-the *corpus* folder. This contains some files that are used to initate the fuzzing.
+the *corpus* folder. This contains some files that are used to initiate the fuzzing.
 You are very welcome to create further corpus files, the ones we use are the example smtp files of the
 go-fuzz package.
 
