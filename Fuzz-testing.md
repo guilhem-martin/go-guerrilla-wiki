@@ -1,8 +1,8 @@
 # go-guerrilla fuzz testing
 
-For further improving the stability of the software, some simple fuzz testing was implemented.
-This is making usage of the [go-fuzz](https://github.com/dvyukov/go-fuzz) package and can easily be performed.
-The tests itself are all in the *fuzz.go* file.
+We use fuzz testing to further improve the stability and security of the software,
+making usage of the [go-fuzz](https://github.com/dvyukov/go-fuzz) package.
+The tests are all in the *fuzz.go* file if the tests branch.
 
 ## Preparations
 
@@ -10,7 +10,7 @@ The tests itself are all in the *fuzz.go* file.
 
 The fuzz test lives in the [Test Branch](https://github.com/flashmob/go-guerrilla/blob/tests/)
 
-We have the above branch for this, as not everyone needs to run the fuzz tests, and there's a lot specific files. The files of interest are fuzz.go & fuzz_test.go, plus the data in the /workdir
+We use a separate, as not everyone needs to run the fuzz tests, and there's a lot specific files. The files of interest are fuzz.go & fuzz_test.go, plus the 'corpus' data in the /workdir
 
 Please checkout the branch *tests* for this:
 
@@ -19,7 +19,7 @@ Please checkout the branch *tests* for this:
 
     $ git pull
 
-We try to keep the branch up to date with the *master* branch.
+We try to keep the branch up-to-date with the *master* branch.
 
 ### go-fuzz
 
@@ -46,7 +46,7 @@ See fuzz_test.go - run the TestGenerateCorpus test by itself to generate the cor
 
 The go-fuzz program will also generate its own corpus files during execution and leave them there so that it can resume the tests from where it left.
 
-## Putting it together
+## Putting it all together
 
 After everything is prepared you can start. Build the package with *go-fuzz*:
 
@@ -68,7 +68,7 @@ restarting, which means we can initialize the server once, and then use the clie
 
 
 
-When you run the go-fuzz program, it will print out statistics every second.
+When you run the go-fuzz program, it will print out some statistics every second.
 eg.
 
 `2017/02/05 02:30:16 slaves: 500, corpus: 336 (1m17s ago), crashers: 2, restarts: 1/1490, execs: 1761505 (12490/sec), cover: 1040, uptime: 2m21s`
@@ -152,15 +152,21 @@ func Fuzz(data []byte) int {
 
 The crash reports are dumped in the workdir/crashes dir
 
-These become data for your automated test cases. 
+This data becomes input for your automated test cases. 
 
-It's best to create a test that works the same way as the fuzz function, 
-but feeds the crash report data directly.
+Crash report files contain the binary input, or quoted ASCII input (.quoted) 
+that triggered the crash/timeout. They also contain the stack trace report 
+(.output files).
 
-Crash reports contain binary input, or ASCII input if it's quoted. If binary, 
-then perhaps it can be base64 encoded if you want to include with your 
-test case. Eg, to encode a binary file:
+The next step is to start a new branch from master, take the crash output and 
+write a test for it. 
+
+See test/guerrilla_test.go for functions that start with TestFuzz... for 
+example. Run the test to see if you get a crash / hang, then fix the test and 
+submit a pull request.
+
+Tip: In case of binary input, then perhaps it can be base64 encoded if you 
+want to include with your test case. Eg, to encode a binary file:
 
 `$ cat workdir/crashers/21c56f89989d19c3bbbd81b288b2dae9e6dd2150 | base64 > encoded.data.txt`
 
-A test case should crash when running it. Next, fix the code so the test won't crash :-)
