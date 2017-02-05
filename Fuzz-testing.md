@@ -163,4 +163,4 @@ test case. Eg, to encode a binary file:
 
 `$ cat workdir/crashers/21c56f89989d19c3bbbd81b288b2dae9e6dd2150 | base64 > encoded.data.txt`
 
-Once you run your test case, it should crash. Then fix the code so the test won't crash :-)
+A test case should crash when running it. Next, fix the code so the test won't crash :-)
