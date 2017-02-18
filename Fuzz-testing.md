@@ -8,7 +8,7 @@ The tests are all in the *fuzz.go* file if the tests branch.
 
 ### Branches
 
-The fuzz test lives in the [Test Branch](https://github.com/flashmob/go-guerrilla/blob/tests/)
+The fuzz test lives in the [Test Branch](https://github.com/flashmob/go-guerrilla/tree/tests)
 
 We use a separate, as not everyone needs to run the fuzz tests, and there's a lot specific files. The files of interest are fuzz.go & fuzz_test.go, plus the 'corpus' data in the /workdir
 
