@@ -16,7 +16,7 @@ How many workers to start ca be controlled by changing the backend's `save_worke
 
 ### How does the default Gateway work?
 
-The gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **saveMailChan** and picked up by an available _Worker_. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope` it's passed as a pointer.
+The gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **saveMailChan** and picked up by an available _Worker_. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope` it's passed as a pointer. Users of the package don't need to be concerned with the saveMailChan details, only use the exposed Process function provided by the gateway, and it takes care of the rest.
 
 ### What are Workers?
 
