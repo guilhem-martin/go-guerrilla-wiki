@@ -175,7 +175,7 @@ And the convenience type to help you pass an anonymous/closure function looks li
 ```
 To pass your function to go-guerrilla, use backends.Service.AddShutdowner function
 
-eg.
+eg. just after where you `backends.Service.AddInitializer(initFunc)`
 ```go
     backends.Service.AddShutdowner(backends.Shutdown(func() error {
         if db != nil {
