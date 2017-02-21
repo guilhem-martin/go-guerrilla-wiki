@@ -1,4 +1,6 @@
-# Backend System
+# Backends 
+
+This documents the backends package.
 
 Note: Work in progress. Not merged yet.
 
@@ -10,21 +12,21 @@ The job of a go-guerrilla backend is to save email. Think of it as the middlewar
 
 The default go-guerrilla backend is called a "_Gateway_". The Gateway further abstracts the middleware layer by managing a set of independent workers. These workers can be started, shutdown, or new work can be sent to the workers via a channel.
 
-You can also control how many workers to start by changing the `save_workers_size` config option.
+How many workers to start ca be controlled by changing the backend's `save_workers_size` config option.
 
-### How does the defult Gateway work?
+### How does the default Gateway work?
 
-The gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **saveMailChan** and picked up by an available worker. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope`
+The gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **saveMailChan** and picked up by an available _Worker_. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope` it's passed as a pointer.
 
-### What are the workers?
+### What are Workers?
 
-Each Worker is composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick out form a bin. Each Processor defines a step the worker must do to complete their work and send a result back.
+Each _Worker_ is composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick out from a conveyor belt (in this case, a channel). Each Processor defines a step the worker must do to complete their work and send a result back. The steps (Processors) that the worker must do can be controlled by changing the backend's `process_stack` config option.
 
-### How workers work?
+### How do workers work?
 
-These are composed using a Decorator pattern. See footnote [1].
+These are structured using a Decorator pattern. See footnote [1].
 
-The decorator works by stacking each Processor on a stack, making a single Processor out of many different Processors. Each processor in the stack must either chain the call to the next Processor by passing the envelope, or return the result to its caller.
+The decorator works by stacking each Processor on a call-stack, making a single Processor out of many different Processors. Each processor in the stack must either chain the call to the next Processor by passing the envelope, or return the result to its caller. You do not need to be concerned with these details, however, it may be worth to checkout the footnote and also decorate.go where the decorator stack is built and processor.go where the interfaces and types are defined. There's also a `DefaultProcessor` which is always called as the final processor, of everything went OK.
 
 Here is the interface of a processor
 
@@ -63,6 +65,12 @@ Then add any other settings that each processor may require.
 The **process_stack** configures how the worker will process each envelope. 
 Each processor is separated using a | character, and each will be executed from left to right.
 So the one above will parse the Mime headers, print some debug info, generate some hashes, add a delivery header, compress the email, save the body to redis, and finally save some info to MySQL.
+
+### Gateway timeouts
+
+As mentioned above, the gateway distributes the envelope to process via the saveMailChan.
+The envelope is submitted to the gateway via the Process function. If the email is not
+processed in time, it will return with an error. Currently it is set to 30 seconds.
 
 ## Extending
 
