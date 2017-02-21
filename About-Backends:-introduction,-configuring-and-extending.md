@@ -191,4 +191,4 @@ eg.
 
 ## Footnotes
 
-[1]: Footnote 1. This pattern is described in detail here: https://github.com/smaxwellstewart/golang-decorator-pattern and this video has good information: https://github.com/smaxwellstewart/golang-decorator-pattern
+[1]: Footnote 1. This pattern is described in detail here: https://github.com/smaxwellstewart/golang-decorator-pattern and this video has good information: https://www.youtube.com/watch?v=xyDkyFjzFVc
