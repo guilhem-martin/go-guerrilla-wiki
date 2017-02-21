@@ -176,4 +176,7 @@ eg.
         return nil
     }))
 
+
+## Footnotes
+
 [1]: Footnote 1. This pattern is described in detail here: https://github.com/smaxwellstewart/golang-decorator-pattern and this video has good information: https://github.com/smaxwellstewart/golang-decorator-pattern
