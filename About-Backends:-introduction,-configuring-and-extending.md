@@ -14,15 +14,15 @@ You can also control how many workers to start by changing the `save_workers_siz
 
 ### How does the defult Gateway work?
 
-The gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **saveMailChan** and picked up by an available worker. The envelope is pointing to a value of `github.com/flashmob/go-guerrilla/envelope.Envelope`
+The gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **saveMailChan** and picked up by an available worker. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope`
 
 ### What are the workers?
 
-Each Worker is composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick out form a single bin. Each Processor defines a step the worker must do to complete their work and send a result back.
+Each Worker is composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick out form a bin. Each Processor defines a step the worker must do to complete their work and send a result back.
 
 ### How workers work?
 
-These are composed using a Decorator pattern. See footnote 1.
+These are composed using a Decorator pattern. See footnote [1].
 
 The decorator works by stacking each Processor on a stack, making a single Processor out of many different Processors. Each processor in the stack must either chain the call to the next Processor by passing the envelope, or return the result to its caller.
 
@@ -176,5 +176,4 @@ eg.
         return nil
     }))
 
-Footnote 1. This pattern is described in detail here: https://github.com/smaxwellstewart/golang-decorator-pattern 
-and this video has good information: https://github.com/smaxwellstewart/golang-decorator-pattern
+[1]: Footnote 1. This pattern is described in detail here: https://github.com/smaxwellstewart/golang-decorator-pattern and this video has good information: https://github.com/smaxwellstewart/golang-decorator-pattern
