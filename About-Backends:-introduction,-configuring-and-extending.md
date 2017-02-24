@@ -10,7 +10,7 @@ Note: Work in progress. Not merged yet.
 
 The main job of a go-guerrilla backend is to save email. Think of it as the middleware.
 
-The default go-guerrilla backend is called a "_Gateway_". The Gateway manages a set of workers which run in their own goroutines. These workers can be started, shutdown, and new work can be distributed to the workers via a channel. The gateway is provides a common interface to these workers.
+The default go-guerrilla backend is called a "_Gateway_". The Gateway manages a set of workers which run in their own goroutines. These workers can be started, shutdown, and new work can be distributed to the workers. The gateway provides a common interface to these workers.
 
 The number of workers to start can be controlled by changing the backend's `save_workers_size` config option.
 
