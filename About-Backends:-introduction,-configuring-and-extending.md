@@ -16,9 +16,11 @@ The number of workers to start can be controlled by changing the backend's `save
 
 ### Gateway internals
 
-The Gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **saveMailChan** and picked up by an available _Worker_. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope` it's passed as a pointer. Users of the package don't need to be concerned with the saveMailChan details, only use the exposed Process function provided by the gateway, and it takes care of the rest.
+The Gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **conveyor** channel and picked up by an available _Worker_. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope` it's passed as a pointer. Users of the package don't need to be concerned with the conveyor channel details, only use the exposed Process function provided by the gateway, and it takes care of the rest.
 
-The Process function can perform different tasks, not only save email. The task is selected via the 2nd argument _task_. So far, there are two types of tasks: `TaskSaveMail` to save email, `TaskValidateRcpt` to validate the recipient of an envelope. 
+The Gateway can perform different tasks, not only save email. Another function it provides is `ValidateRcpt` which validates the envelope's last recipient pushed. It still uses the conveyor channel to distribute the work, and the `task` field in the `workerMsg` 
+
+Internally, the task is selected using the SelectTask type. So far, there are two types of tasks: `TaskSaveMail` to save email, `TaskValidateRcpt` to validate the recipient of an envelope. 
 
 ### What are Workers?
 
