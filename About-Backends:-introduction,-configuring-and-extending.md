@@ -8,21 +8,23 @@ Note: Work in progress. Not merged yet.
 
 ### What does a backend do?
 
-The job of a go-guerrilla backend is to save email. Think of it as the middleware.
+The main job of a go-guerrilla backend is to save email. Think of it as the middleware.
 
-The default go-guerrilla backend is called a "_Gateway_". The Gateway further abstracts the middleware layer by managing a set of independent workers. These workers can be started, shutdown, or new work can be sent to the workers via a channel.
+The default go-guerrilla backend is called a "_Gateway_". The Gateway manages a set of workers which run in their own goroutines. These workers can be started, shutdown, and new work can be distributed to the workers via a channel. The gateway is provides a common interface to these workers.
 
-How many workers to start ca be controlled by changing the backend's `save_workers_size` config option.
+The number of workers to start can be controlled by changing the backend's `save_workers_size` config option.
 
-### How does the default Gateway work?
+### Gateway internals
 
-The gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **saveMailChan** and picked up by an available _Worker_. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope` it's passed as a pointer. Users of the package don't need to be concerned with the saveMailChan details, only use the exposed Process function provided by the gateway, and it takes care of the rest.
+The Gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **saveMailChan** and picked up by an available _Worker_. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope` it's passed as a pointer. Users of the package don't need to be concerned with the saveMailChan details, only use the exposed Process function provided by the gateway, and it takes care of the rest.
+
+The Process function can perform different tasks, not only save email. The task is selected via the 2nd argument _task_. So far, there are two types of tasks: `TaskSaveMail` to save email, `TaskValidateRcpt` to validate the recipient of an envelope. 
 
 ### What are Workers?
 
-Each _Worker_ is composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick out from a conveyor belt (in this case, a channel). Each Processor defines a step the worker must do to complete their work and send a result back. The steps (Processors) that the worker must do can be controlled by changing the backend's `process_stack` config option.
+Each _Worker_ can be composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick out from a conveyor belt (in this case, a channel). Each Processor is a step the worker must do to complete their work and send a result back. The steps (Processors) that the worker must do can be controlled by changing the backend's `process_stack` config option.
 
-### How do workers work?
+### Workers internals
 
 These are structured using a Decorator pattern. See footnote [1].
 
