@@ -34,9 +34,11 @@ The decorator pattern stacks each Processor on a call-stack, making a single Pro
 
 Here is the interface of a processor
 ```go
+import "github.com/flashmob/go-guerrilla/mail"
+
 // Our processor is defined as something that processes the envelope and returns a result and error
 type Processor interface {
-	Process(*envelope.Envelope, SelectTask) (Result, error)
+	Process(*mail.Envelope, SelectTask) (Result, error)
 }
 ```
 In go-guerrilla's code, Go source files that define a Processor are prefixed with 'p_'
@@ -156,7 +158,7 @@ var MyFooProcessor = func() backends.Decorator {
 		return nil
 	})
 	// register our initializer
-	backends.Service.AddInitializer(initFunc)
+	backends.Svc.AddInitializer(initFunc)
 	return func(p backends.Processor) backends.Processor {
 		return backends.ProcessWith(
 			func(e *mail.Envelope, task backends.SelectTask) (backends.Result, error) {
@@ -202,7 +204,7 @@ To pass your function to go-guerrilla, use backends.Service.AddShutdowner functi
 
 eg. just after `backends.Service.AddInitializer(initFunc)` add something like this:
 ```go
-    backends.Service.AddShutdowner(backends.ShutdownWith(func() error {
+    backends.Svc.AddShutdowner(backends.ShutdownWith(func() error {
         if db != nil {
             return db.Close()
         }
