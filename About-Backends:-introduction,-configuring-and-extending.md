@@ -24,20 +24,20 @@ Internally, the task is selected using the SelectTask type. So far, there are tw
 
 ### What are Workers?
 
-Each _Worker_ can be composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick out from a conveyor belt (in this case, a channel). Each Processor is a step the worker must do to complete their work and send a result back. The steps (Processors) that the worker must do can be controlled by changing the backend's `process_stack` config option.
+Each _Worker_ can be composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick up from a conveyor belt (in this case, a channel). Workers must do a number of steps to complete their work before sending their results back. The steps (Processors) that the worker must do can be controlled by changing the backend's `process_stack` config option.
 
 ### Workers internals
 
-These are structured using a Decorator pattern. See footnote [1].
+Each worker is structured using a Decorator pattern. See footnote [1].
 
-The decorator works by stacking each Processor on a call-stack, making a single Processor out of many different Processors. Each processor in the stack must either chain the call to the next Processor by passing the envelope, or return the result to its caller. You do not need to be concerned with these details, however, it may be worth to checkout the footnote and also decorate.go where the decorator stack is built and processor.go where the interfaces and types are defined. There's also a `DefaultProcessor` which is always called as the final processor, of everything went OK.
+The decorator pattern stacks each Processor on a call-stack, making a single Processor out of many different Processors. Each processor in the stack must either chain the call to the next Processor by passing the envelope, or return the result back to the caller. You do not need to be concerned with these details, however, it may be worth to checkout the footnote and also decorate.go (where the decorator stack is built) and processor.go (where the interfaces and types are defined). There's also a `DefaultProcessor` which is always called as the final processor, if everything went OK.
 
 Here is the interface of a processor
 ```go
-    // Our processor is defined as something that processes the envelope and returns a result and error
-    type Processor interface {
-	    Process(*envelope.Envelope) (BackendResult, error)
-    }
+// Our processor is defined as something that processes the envelope and returns a result and error
+type Processor interface {
+	Process(*envelope.Envelope, SelectTask) (Result, error)
+}
 ```
 In go-guerrilla's code, Go source files that define a Processor are prefixed with 'p_'
 
@@ -67,12 +67,12 @@ Then add any other settings that each processor may require.
        }
 ```
 The **process_stack** configures how the worker will process each envelope. 
-Each processor is separated using a "|" (pipe) character, and each will be executed from left to right.
+Each processor is separated using a "|" (pipe) character, and execution is from left to right.
 So the one above will parse the MIME headers, print some debug info, generate some hashes, add a delivery header, compress the email, save the body to redis, and finally save some info to MySQL.
 
 ### Gateway timeouts
 
-As detailed above, the gateway distributes the envelope to process via the saveMailChan.
+As detailed above, the gateway distributes the envelope to process via the **conveyor** channel.
 The envelope is submitted to the gateway via the Process function. If the email is not
 processed in time, it will return with an error. Currently it is set to 30 seconds.
 
@@ -80,8 +80,8 @@ processed in time, it will return with an error. Currently it is set to 30 secon
 
 The decorator pattern makes it easy to create your own Processors. To get started, create a new .go file, then import
 ```go
-    "github.com/flashmob/go-guerrilla/backends"
-    "github.com/flashmob/go-guerrilla/envelope"
+"github.com/flashmob/go-guerrilla/backends"
+"github.com/flashmob/go-guerrilla/envelope"
 ```
 From there, if your processor needs a configuration, define your own configuration struct. The struct can only have string, float or numeric fields. Each field must be public and be annotated with a [struct tag](http://stackoverflow.com/questions/10858787/what-are-the-uses-for-tags-in-go) to map it to the json file. eg.
 ```go
@@ -92,25 +92,31 @@ From there, if your processor needs a configuration, define your own configurati
 From there, declare your processor as a decorator using the following pattern:
 
 ```go
-    // The MyFoo decorator [enter what it does]
-    var MyFooProcessor = func backends.Decorator {
-        return func(c backends.Processor) backends.Processor {
-            return ProcessorFunc(func(e *envelope.Envelope) (backends.BackendResult, error) {
+// The MyFoo decorator [enter what it does]
+var MyFooProcessor = func() backends.Decorator {
+	return func(p backends.Processor) backends.Processor {
+		return backends.ProcessWith(func(e *envelope.Envelope, task backends.SelectTask) (backends.Result, error) {
+			if task == backends.TaskValidateRcpt {
+				// optionally, validate recipient
+				return p.Process(e, task)
+			} else if task == backends.TaskSaveMail {
+				// do some work here
+				// if something went wrong and we want to stop processing, return
+				// errors.New("Something went wrong")
+				// return backends.NewBackendResult(fmt.Sprintf("554 Error: %s", err)), err
 
-                // do some work here
-                // if something went wrong and we want to stop processing, return
-                // errors.New("Something went wrong")
-                // return backends.NewBackendResult(fmt.Sprintf("554 Error: %s", err)), err
-                        
-                // call the next processor in the chain
-                return c.Process(e)
-            })
-        }
-    }
+				// call the next processor in the chain
+				return p.Process(e, task)
+			}
+			return p.Process(e, task)
+		})
+	}
+}
+
 ```
 Next, somewhere in the beginning of your code (perhaps in another file), before you create a new go-guerrilla, do this:
 ```go
-    backends.Service.AddProcessor("MyFoo", MyFooProcessor)
+backends.Service.AddProcessor("MyFoo", MyFooProcessor)
 ```
 There are additional features which allow you to do some things at initialization and shutdown.
 
@@ -127,7 +133,7 @@ The interface looks like this (complete example further down):
 ```
 There's also convenience type defined so that you can create your initializer as a closure or an anonymous function. 
 ```go
-    type Initialize func(backendConfig BackendConfig) error
+    type InitializeWith func(backendConfig BackendConfig) error
 ```
 Once you've declared your initializer, use the `backends.Service.AddInitializer` function to register it.
 
