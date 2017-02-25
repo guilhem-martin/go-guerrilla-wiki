@@ -81,7 +81,7 @@ processed in time, it will return with an error. Currently it is set to 30 secon
 The decorator pattern makes it easy to create your own Processors. To get started, create a new .go file, then import
 ```go
 "github.com/flashmob/go-guerrilla/backends"
-"github.com/flashmob/go-guerrilla/envelope"
+"github.com/flashmob/go-guerrilla/mail"
 ```
 From there, if your processor needs a configuration, define your own configuration struct. The struct can only have string, float or numeric fields. Each field must be public and be annotated with a [struct tag](http://stackoverflow.com/questions/10858787/what-are-the-uses-for-tags-in-go) to map it to the json file. eg.
 ```go
@@ -95,21 +95,23 @@ From there, declare your processor as a decorator using the following pattern:
 // The MyFoo decorator [enter what it does]
 var MyFooProcessor = func() backends.Decorator {
 	return func(p backends.Processor) backends.Processor {
-		return backends.ProcessWith(func(e *envelope.Envelope, task backends.SelectTask) (backends.Result, error) {
-			if task == backends.TaskValidateRcpt {
-				// optionally, validate recipient
-				return p.Process(e, task)
-			} else if task == backends.TaskSaveMail {
-				// do some work here
-				// if something went wrong and we want to stop processing, return
-				// errors.New("Something went wrong")
-				// return backends.NewBackendResult(fmt.Sprintf("554 Error: %s", err)), err
+		return backends.ProcessWith(
+			func(e *mail.Envelope, task backends.SelectTask) (backends.Result, error) {
+				if task == backends.TaskValidateRcpt {
+					// optionally, validate recipient
+					return p.Process(e, task)
+				} else if task == backends.TaskSaveMail {
+					// do some work here
+					// if want to stop processing, return
+					// errors.New("Something went wrong")
+					// return backends.NewBackendResult(fmt.Sprintf("554 Error: %s", err)), err
 
-				// call the next processor in the chain
+					// call the next processor in the chain
+					return p.Process(e, task)
+				}
 				return p.Process(e, task)
-			}
-			return p.Process(e, task)
-		})
+			},
+		)
 	}
 }
 
@@ -140,34 +142,47 @@ Once you've declared your initializer, use the `backends.Service.AddInitializer`
 So putting it together, your Processor will look something like this
 
 ```go
-    // The MyFoo decorator [enter what it does]
-    var MyFooProcessor = func backends.Decorator {
-        config := &myFooConfig{}
-        // our initFunc will load the config.
-        initFunc := backends.Initialize(func(backendConfig backends.BackendConfig) error {
-	    configType := backends.BaseConfig(&myFooConfig{})
-	    bcfg, err := backends.Service.ExtractConfig(backendConfig, configType)
-	    if err != nil {
-	        return err
-	    }
-	    config := bcfg.(*myFooConfig)
-                return nil
-        })
-        // register our initializer
-        backends.Service.AddInitializer(initFunc)
-        return func(c backends.Processor) backends.Processor {
-            return ProcessorFunc(func(e *envelope.Envelope) (backends.BackendResult, error) {
 
-                // do some work here
-                // if something went wrong and we want to stop processing, return
-                // errors.New("Something went wrong")
-                // return backends.NewBackendResult(fmt.Sprintf("554 Error: %s", err)), err
-                        
-                // call the next processor in the chain
-                return c.Process(e)
-            })
-        }
-    }
+var MyFooProcessor = func() backends.Decorator {
+	config := &myFooConfig{}
+	// our initFunc will load the config.
+	initFunc := backends.InitializeWith(func(backendConfig backends.BackendConfig) error {
+		configType := backends.BaseConfig(&myFooConfig{})
+		bcfg, err := backends.Service.ExtractConfig(backendConfig, configType)
+		if err != nil {
+			return err
+		}
+		config := bcfg.(*myFooConfig)
+		return nil
+	})
+	// register our initializer
+	backends.Service.AddInitializer(initFunc)
+	return func(p backends.Processor) backends.Processor {
+		return backends.ProcessWith(
+			func(e *mail.Envelope, task backends.SelectTask) (backends.Result, error) {
+				if task == backends.TaskValidateRcpt {
+					// optionally, validate recipient
+					return p.Process(e, task)
+				} else if task == backends.TaskSaveMail {
+					/*
+						do some work here..
+						if want to stop processing, return
+
+						 errors.New("Something went wrong")
+						 return backends.NewBackendResult(fmt.Sprintf("554 Error: %s", err)), err
+					*/
+
+					_ = config // use config somewhere here..
+
+					// call the next processor in the chain
+					return p.Process(e, task)
+				}
+				return p.Process(e, task)
+			},
+		)
+	}
+}
+
 ```
 ### Processor shutdown
 
@@ -181,13 +196,13 @@ The interface looks like this
 ```
 And the convenience type to help you pass an anonymous/closure function looks like this
 ```go
-    type Shutdown func() error
+    type ShutdownWith func() error
 ```
 To pass your function to go-guerrilla, use backends.Service.AddShutdowner function
 
-eg. just after where you `backends.Service.AddInitializer(initFunc)`
+eg. just after `backends.Service.AddInitializer(initFunc)` add something like this:
 ```go
-    backends.Service.AddShutdowner(backends.Shutdown(func() error {
+    backends.Service.AddShutdowner(backends.ShutdownWith(func() error {
         if db != nil {
             return db.Close()
         }
