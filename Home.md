@@ -39,3 +39,5 @@ https://gist.github.com/colm-mchugh/ee3b0b7b062a235a871b - source examples
 https://elithrar.github.io/article/using-buffer-pools-with-go/ - nice writeup about Sized buffer pools 
 
 https://github.com/djherbis/buffer - composite buffers (the unbounded bounder could be really useful, the ring buffer is interesting
+
+https://talks.golang.org/2014/readability.slide#1 - Readable Go style
