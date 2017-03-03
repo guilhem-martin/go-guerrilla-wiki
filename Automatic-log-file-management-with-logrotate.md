@@ -42,7 +42,13 @@ Where:
 
 The secret sauce above is the `postrotate` ... `endscript` section. This tells go-guerrilla to re-open the log files after they have been rotated. Make sure to change `/var/run/go-guerrilla.pid` to the file where go-guerrilla writes out the pid (process id).
 
-Save and check status like this:
+Save and run it to see if it works:
+
+    $ logrotate /etc/logrotate.conf
+
+It may barf at the beginning that it can't compress, but should be ok.
+
+check status like this:
 
     $ cat /var/lib/logrotate/status 
 
