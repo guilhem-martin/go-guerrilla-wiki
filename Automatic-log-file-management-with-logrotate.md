@@ -46,7 +46,7 @@ Save and run it to see if it works:
 
     $ logrotate /etc/logrotate.conf
 
-It may barf at the beginning that it can't compress, but should be ok.
+It may barf at the beginning that it can't compress, but that should be OK.
 
 check status like this:
 
