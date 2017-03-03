@@ -23,7 +23,7 @@ Create a new file there, eg. `guerrilla` Then begin editing your configuration b
     create 0644 gmail gmail
     su gmail gmail
     postrotate
-        kill -HUP `cat /var/run/go-guerrilla.pid`
+        kill -USR1 `cat /var/run/go-guerrilla.pid`
     endscript
 }
 ```
@@ -40,7 +40,7 @@ Where:
 * `create` create new files with mode, owner, group permissions
 * `su` Use this user to perform all actions
 
-The secret sauce above is the `postrotate` ... `endscript` section. This tells go-guerrilla to re-open the log files after they have been rotated. Make sure to change `/var/run/go-guerrilla.pid` to the file where go-guerrilla writes out the pid.
+The secret sauce above is the `postrotate` ... `endscript` section. This tells go-guerrilla to re-open the log files after they have been rotated. Make sure to change `/var/run/go-guerrilla.pid` to the file where go-guerrilla writes out the pid (process id).
 
 Save and check status like this:
 
