@@ -53,7 +53,7 @@ check status like this:
     $ cat /var/lib/logrotate/status 
 
 ### RTFM ;-)
-Check out the manual here for a complete list of options and examples: http://linuxcommand.org/man_pages/logrotate8.html
+Check out the logrotate manual for a complete list of options and examples: http://linuxcommand.org/man_pages/logrotate8.html
 
 ### Implementation details and limitations
 
