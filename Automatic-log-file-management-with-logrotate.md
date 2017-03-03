@@ -54,3 +54,13 @@ check status like this:
 
 ### RTFM ;-)
 Check out the manual here for a complete list of options and examples: http://linuxcommand.org/man_pages/logrotate8.html
+
+### Implementation details and limitations
+
+Log file re-opening is triggered by listening to the `USR1` [Unix signal] (https://en.wikipedia.org/wiki/Unix_signal) - therefore it will only work on systems following POSIX. Windows users may try using Cygwin which supports the kill command or the new [Windows Subsystem for Linux](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux)
+
+When using go-guerrilla as a package, it will not listen to any signal. It would be your choice on how to best capture an event and then deal with the event (call the log re-opening functions, etc). There's a handy helper function on AppConfig that can fire all the events for you:
+
+```go
+func (c *AppConfig) EmitLogReopenEvents(app Guerrilla)
+```
