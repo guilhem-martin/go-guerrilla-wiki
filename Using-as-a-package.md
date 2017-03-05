@@ -173,9 +173,12 @@ A 'backend' is something that implements `guerrilla.Backend` interface.
 You don't have to implement this interface yourself. By default, the go-guerrilla package will use the `BackendGateway` - which we refer to as the _Gateway_ backend. So in the above example, the configuration will be passed to the _Gateway_ backend.
 
 The _Gateway_ is quite powerful. Think of it as middle-ware. It can be composed by chaining individual 
-components which we refer to as "Processors". In the above example, we chain 
+components which we refer to as _Processors_. In the above example, we chained 
 `"HeadersParser|Header|Hasher|Debugger"` which means that we'll start processing with the HeadersParser
-processor and finish with Debugger.
+processor and finish with the Debugger. You'll need to refer to individual documentation for 
+each _Processor_ to see what fields are available.
 
 Notice that we instantiated a new `bcfg` variable and initialized with a literal it as if we initialized a map. 
-The keys of the map correspond the jason struct stags, these struct tags are defined in individual `Processor` components
+The keys of the map correspond the jason struct stags, these struct tags are defined in individual `Processor` components. (The above components are in the backend package, go file names prefixed with 'p_'.
+
+See the [Backends Documentation](https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending) page for more details
