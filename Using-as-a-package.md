@@ -182,3 +182,15 @@ Notice that we instantiated a new `bcfg` variable and initialized with a literal
 The keys of the map correspond the jason struct stags, these struct tags are defined in individual `Processor` components. (The above components are in the backend package, go file names prefixed with 'p_'.
 
 See the [Backends Documentation](https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending) page for more details
+
+### Loading config from Json
+
+todo
+
+### Config hot-reloading
+
+todo
+
+### custom processor
+
+todo
