@@ -136,5 +136,46 @@ type ServerConfig struct {
 
 	// private fields omitted for brevity
 }
+```
 
-Should be self explanatory, right? Here are some more examples.
+Continue for some more examples.
+
+###  Backend Configuration
+
+Here we use `backends.BackendConfig` to configure the default _Gateway_ backend.
+The _Gateway_ backend is composed of multiple components, therefore it does not define static configuration fields. Instead, it uses a map to configure each setting.
+
+```go
+cfg := &AppConfig{LogFile: log.OutputStdout.String()}
+sc := ServerConfig{
+	ListenInterface: "127.0.0.1:2526",
+	IsEnabled:       true,
+}
+cfg.Servers = append(cfg.Servers, sc)
+bcfg := backends.BackendConfig{
+	"save_workers_size":  3,
+	"process_stack":      "HeadersParser|Header|Hasher|Debugger",
+	"log_received_mails": true,
+}
+cfg.BackendConfig = bcfg
+smtp := SMTP{config: cfg}
+
+err := smtp.Start()
+if err != nil {
+	t.Error("start error", err)
+} 
+
+```
+
+### A bit about the backend system. 
+
+A 'backend' is something that implements `guerrilla.Backend` interface. 
+You don't have to implement this interface yourself. By default, the go-guerrilla package will use the `BackendGateway` - which we refer to as the _Gateway_ backend. So in the above example, the configuration will be passed to the _Gateway_ backend.
+
+The _Gateway_ is quite powerful. Think of it as middle-ware. It can be composed by chaining individual 
+components which we refer to as "Processors". In the above example, we chain 
+`"HeadersParser|Header|Hasher|Debugger"` which means that we'll start processing with the HeadersParser
+processor and finish with Debugger.
+
+Notice that we instantiated a new `bcfg` variable and initialized with a literal it as if we initialized a map. 
+The keys of the map correspond the jason struct stags, these struct tags are defined in individual `Processor` components
