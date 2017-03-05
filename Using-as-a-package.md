@@ -87,15 +87,18 @@ Here is the `AppConfig` type
 ```go
 // AppConfig is the holder of the configuration of the app
 type AppConfig struct {
-	// Servers can have one or more items. Defaults to 1 server listening to 127.0.0.1:2525
+	// Servers can have one or more items. Defaults to 1 server listening 
+        /// to 127.0.0.1:2525
 	Servers       []ServerConfig         `json:"servers"`
 	// AllowedHosts lists which hosts to accept email for. Defaults to os.Hostname
 	AllowedHosts  []string               `json:"allowed_hosts"`
 	// PidFile is the path for writing out the process id. No output if empty
 	PidFile       string                 `json:"pid_file"`
-	// LogFile is where the logs go. Use path to file, or "stderr", "stdout" or "off". Default "stderr"
+	// LogFile is where the logs go. Use path to file, or "stderr", "stdout" 
+        // or "off". Default "stderr"
 	LogFile       string                 `json:"log_file,omitempty"`
-	// LogLevel controls the lowest level we log. "info", "debug", "error", "panic". Default "info"
+	// LogLevel controls the lowest level we log. 
+        // "info", "debug", "error", "panic". Default "info"
 	LogLevel      string                 `json:"log_level,omitempty"`
 	// BackendConfig configures the transaction processing backend
 	BackendConfig backends.BackendConfig `json:"backend_config"`
@@ -114,23 +117,28 @@ type ServerConfig struct {
 	// Hostname will be used in the server's reply to HELO/EHLO. If TLS enabled
 	// make sure that the Hostname matches the cert. Defaults to os.Hostname()
 	Hostname        string `json:"host_name"`
-	// MaxSize is the maximum size of an email that will be accepted for delivery. Defaults to 10MB
+	// MaxSize is the maximum size of an email that will be accepted for delivery. 
+        // Defaults to 10MB
 	MaxSize         int64  `json:"max_size"`
 	// PrivateKeyFile path to cert private key in PEM format. Will be ignored if blank
 	PrivateKeyFile  string `json:"private_key_file"`
-	// PublicKeyFile path to cert (public key) chain in PEM format. Will be ignored if blank
+	// PublicKeyFile path to cert (public key) chain in PEM format. 
+        // Will be ignored if blank
 	PublicKeyFile   string `json:"public_key_file"`
 	// Timeout specifies the connection timeout in seconds. Defaults to 30
 	Timeout         int    `json:"timeout"`
 	// Listen interface specified in <ip>:<port> - defaults to 127.0.0.1:2525
 	ListenInterface string `json:"listen_interface"`
-	// StartTLSOn should we offer STARTTLS command. Cert must be valid. False by default
+	// StartTLSOn should we offer STARTTLS command. Cert must be valid. 
+        // False by default
 	StartTLSOn      bool   `json:"start_tls_on,omitempty"`
 	// TLSAlwaysOn run this server as a pure TLS server, i.e. SMTPS
 	TLSAlwaysOn     bool   `json:"tls_always_on,omitempty"`
-	// MaxClients controls how many maxiumum clients we can handle at once. Defaults to 100
+	// MaxClients controls how many maxiumum clients we can handle at once. 
+        // Defaults to 100
 	MaxClients      int    `json:"max_clients"`
-	// LogFile is where the logs go. Use path to file, or "stderr", "stdout" or "off". Default "stderr"
+	// LogFile is where the logs go. Use path to file, or "stderr", "stdout" or "off". 
+        // Default "stderr"
 	// defaults to AppConfig.Log file setting 
 	LogFile         string `json:"log_file,omitempty"`
 
