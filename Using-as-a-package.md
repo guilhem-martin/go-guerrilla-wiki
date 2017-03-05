@@ -170,9 +170,9 @@ if err != nil {
 ### A bit about the backend system. 
 
 A 'backend' is something that implements `guerrilla.Backend` interface. 
-You don't have to implement this interface yourself. By default, the go-guerrilla package will use the `BackendGateway` - which we refer to as the _Gateway_ backend. So in the above example, the configuration will be passed to the _Gateway_ backend.
+You don't have to implement this interface yourself. By default, go-guerrilla will use `backends.BackendGateway` - which we refer to as the _Gateway_ backend. So in the above example, the configuration will be passed to the _Gateway_ backend.
 
-The _Gateway_ is quite powerful. Think of it as middle-ware. It can be composed by chaining individual 
+The _Gateway_ is actually quite powerful. Think of it as middle-ware. It can be composed by chaining individual 
 components which we refer to as _Processors_. In the above example, we chained 
 `"HeadersParser|Header|Hasher|Debugger"` which means that we'll start processing with the HeadersParser
 processor and finish with the Debugger. You'll need to refer to individual documentation for 
