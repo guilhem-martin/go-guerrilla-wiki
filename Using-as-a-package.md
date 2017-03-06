@@ -27,7 +27,7 @@ if err == nil {
 }
 ```
 
-`d.Start()` does not block after the server has been started, so make sure you keep your program busy doing something else.
+`d.Start()` does not block after the server has been started, so make sure that you keep your program busy.
 
 The defaults are: 
 * Server listening to 127.0.0.1:2525
