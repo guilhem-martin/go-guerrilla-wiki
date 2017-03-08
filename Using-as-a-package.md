@@ -49,9 +49,9 @@ import (
         "github.com/flashmob/go-guerrilla/log"
 )
 
-cfg := &AppConfig{LogFile: log.OutputOff.String()}
+cfg := &guerrilla.AppConfig{LogFile: log.OutputOff.String()}
 
-d := Daemon{Config: cfg}
+d := guerrilla.Daemon{Config: cfg}
 
 err := d.Start()
 if err != nil {
@@ -68,15 +68,15 @@ The default server listens to `127.0.0.1:2525` - what if want `127.0.0.1:2526` i
 
 ```go
 
-cfg := &AppConfig{LogFile: log.OutputStdout.String()}
+cfg := &guerrilla.AppConfig{LogFile: log.OutputStdout.String()}
 
-sc := ServerConfig{
+sc := guerrilla.ServerConfig{
 	ListenInterface: "127.0.0.1:2526",
 	IsEnabled:       true,
 }
 cfg.Servers = append(cfg.Servers, sc)
 
-d := Daemon{Config: cfg}
+d := guerrilla.Daemon{Config: cfg}
 
 err := d.Start()
 if err != nil {
@@ -166,8 +166,8 @@ Here we use `backends.BackendConfig` to configure the default _Gateway_ backend.
 The _Gateway_ backend is composed of multiple components, therefore it does not define any static configuration fields. Instead, it uses a map to configure the settings.
 
 ```go
-cfg := &AppConfig{LogFile: log.OutputStdout.String()}
-sc := ServerConfig{
+cfg := &guerrilla.AppConfig{LogFile: log.OutputStdout.String()}
+sc := guerrilla.ServerConfig{
 	ListenInterface: "127.0.0.1:2526",
 	IsEnabled:       true,
 }
@@ -180,7 +180,7 @@ bcfg := backends.BackendConfig{
 }
 cfg.BackendConfig = bcfg
 
-d := Daemon{Config: cfg}
+d := guerrilla.Daemon{Config: cfg}
 
 err := d.Start()
 
@@ -254,7 +254,7 @@ Say you have a json configuration file like so:
 Then you can load it in like this:
 
 ```go
-d := Daemon{}
+d := guerrilla.Daemon{}
 _, err = d.LoadConfig("guerrillad.conf.json")
 if err != nil {
 	fmt.Println("ReadConfig error", err)
@@ -284,7 +284,7 @@ is that the max-clients cannot be resized since our current pool implementation 
 
 ```go
 
-d := Daemon{}
+d := guerrilla.Daemon{}
 _, err = d.LoadConfig("guerrillad.conf.json")
 if err != nil {
 	fmt.Println("ReadConfig error", err)
@@ -346,8 +346,10 @@ Use `d.Log()` to log stuff.
 
 It uses [logrus](https://github.com/sirupsen/logrus) under the hood. For example:
 
-d := Daemon{}
+```go
+d := guerrilla.Daemon{}
 l := d.Log().Info("Oh Hai... you're still here?")
+```
 
 In the beginning, the log will go to stderr, but once you do d.Start(), the
 log will point to whatever is specified in the config.
