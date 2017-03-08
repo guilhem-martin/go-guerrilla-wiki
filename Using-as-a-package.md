@@ -60,7 +60,7 @@ if err != nil {
 
 ```
 
-Here we've set the Daemon's `Config` field with an instance of `AppConfig` type with our own setting for the `LogFile` field. We had to import `github.com/flashmob/go-guerrilla/log` to get the `log.OutputOff`. `LogFile` could also be a string to a path, or set it with `log.log.OutputStderr.String()`, `log.OutputStdout.String()`
+Here we've set the Daemon's `Config` field with an instance of `AppConfig` type with our own setting for the `LogFile` field. We had to import `github.com/flashmob/go-guerrilla/log` to get the `log.OutputOff`. `LogFile` could also be a string to a path, or set it with `log.log.OutputStderr.String()`, or `log.OutputStdout.String()`
 
 ### Starting a server - Custom listening interface
 
@@ -118,7 +118,7 @@ type AppConfig struct {
 Notice that it has [struct tags](http://stackoverflow.com/questions/10858787/what-are-the-uses-for-tags-in-go)
  - this maps each value to a JSON file, we'll show you how to read the 
 config from a file later. Notice that `Servers` is a slice, you can have as many servers as you like. 
-Finally the `BackendConfig` is the configuration for how your email transaction will be processed.
+Finally the `BackendConfig` configures how your email transaction will be processed.
 All servers share the same backend.
 
 Here is the `Servers` struct:
@@ -158,12 +158,12 @@ type ServerConfig struct {
 }
 ```
 
-Lets continue for some more examples.
+Let's continue for some more examples.
 
 ###  Backend Configuration
 
 Here we use `backends.BackendConfig` to configure the default _Gateway_ backend.
-The _Gateway_ backend is composed of multiple components, therefore it does not define static configuration fields. Instead, it uses a map to configure the settings.
+The _Gateway_ backend is composed of multiple components, therefore it does not define any static configuration fields. Instead, it uses a map to configure the settings.
 
 ```go
 cfg := &AppConfig{LogFile: log.OutputStdout.String()}
@@ -188,6 +188,7 @@ if err != nil {
 	fmt.Println("start error", err)
 } 
 
+
 ```
 
 ### A bit about the backend system. 
@@ -210,19 +211,129 @@ The other options, `log_received_mails` is part of the Debugger processor, and `
 is from the Header processor.
 
 
-Notice that we instantiated a new `bcfg` variable and initialized with a literal it as if we initialized a map. 
-The keys of the map correspond the jason struct stags, these struct tags are defined in individual `Processor` components. (The above components are in the backend package, go file names prefixed with 'p_'.
+Notice that we instantiated a new `bcfg` variable and initialized with a literal, just like initializing a map. 
+The keys of the map correspond the jason struct stags, these struct tags are defined in individual `Processor` components. (The above components are defined in the backend package, go file names prefixed with 'p_'.
 
 See the [Backends Documentation](https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending) page for more details
 
 ### Loading config from Json
 
-todo
+Say you have a json configuration file like so:
+
+```json
+
+{
+    "log_file" : "./tests/testlog",
+    "log_level" : "debug",
+    "pid_file" : "tests/go-guerrilla.pid",
+    "allowed_hosts": ["spam4.me","grr.la"],
+    "backend_config" :
+        {
+            "log_received_mails" : true,
+            "process_stack": "HeadersParser|Header|Hasher|Debugger",
+            "save_workers_size":  3
+        },
+    "servers" : [
+        {
+            "is_enabled" : true,
+            "host_name":"mail.guerrillamail.com",
+            "max_size": 100017,
+            "private_key_file":"config_test.go",
+            "public_key_file":"config_test.go",
+            "timeout":160,
+            "listen_interface":"127.0.0.1:2526",
+            "start_tls_on":false,
+            "tls_always_on":false,
+            "max_clients": 2
+        }
+    ]
+}
+
+```
+
+Then you can load it in like this:
+
+```go
+d := Daemon{}
+_, err = d.LoadConfig("guerrillad.conf.json")
+if err != nil {
+	fmt.Println("ReadConfig error", err)
+		
+}
+
+err = d.Start()
+if err != nil {
+	fmt.Println("server error", err)
+}
+// .. 
+
+```
+
+There's also a sister `Daemon.SetConfig` function which allows you to pass the AppConfig
+directly, without unmarshalling from Json.
 
 ### Config hot-reloading
 
+Use `d.ReloadConfigFile` to re-load the config file after the daemon has started
+
+Almost every config can be hot-reloaded. This means changing things without re-starting the daemon, 
+kind of like changing a tyre while the car is still moving! 🚗 🚗 🚗
+It can change the TLS configuration, add/remove/start/stop servers, log output destinations & levels, 
+pid file name, allowed-hosts, connection timeout, backend configuration. The only limitation right now
+is that the max-clients cannot be resized since our current pool implementation doesn't support it (yet).
+
+```go
+
+d := Daemon{}
+_, err = d.LoadConfig("guerrillad.conf.json")
+if err != nil {
+	fmt.Println("ReadConfig error", err)
+		
+}
+
+err = d.Start()
+if err != nil {
+	fmt.Println("server error", err)
+}
+
+// ... somewhere else
+
+d.ReloadConfigFile("guerrillad.conf.json")
+
+
+```
+
+### Log reopening
+
+To re-open all log files, use:
+
+`d.ReopenLogs()`
+
+Why would you want to reopen log files? A common way to rotate logs is to rename
+the file, and then tell the daemon to close the file descriptor and open a new one.
+This way no log entries are lost when the file is rotated. 
+
+Here is how you can [setup log rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate) using logrotate(8)
+
+### Custom processor
+
 todo
 
-### custom processor
+### Graceful shutdown
 
-todo
+In all examples above, we did not shutdown the server, assuming that your program will keep
+busy by doing something else. When it's time to close, we do not want to abruptly close and leave any transactions halfway, we want to do a graceful shutdown and finish off any emails, close files/connections
+and then quit. We do this by calling:
+
+`s.Shutdown()`
+
+This will block until everything has been shuttered. It may take a while if your server is busy.
+The way it works is, all connections are given very low timeouts while new connections are not accepted.
+ If any clients are in the `command` state, the server will respond to all client's commands with 
+`421 Server is shutting down. Please try again later. Sayonara!`, then close. 
+If the client is in the DATA state, the transaction will not be interrupted and will try to 
+complete with a low timeout, then close.
+Once all connections close, the backend gets shuttered and then the Shutdown function returns.
+n.b Why Sayonara? The section of that code was written in Japan ;-)
+
+### Pub/Sub 
