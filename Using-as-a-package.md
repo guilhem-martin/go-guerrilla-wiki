@@ -373,10 +373,15 @@ func (d *Daemon) Unsubscribe(topic Event, handler interface{})
 
 For example:
 
-```
+```go
 pidEvHandler := func(c *AppConfig) {
 	d.Logger.Info("The pid file changed to:", c.PidFile)
 }
 d.Subscribe(EventConfigPidFile, pidEvHandler)
 
 ```
+
+### More examples
+
+- See [MailDiranasaurus](https://github.com/flashmob/maildiranasaurus) - a project used to get an insight into using go-guerrilla as a package. The [serve.go](https://github.com/flashmob/maildiranasaurus/blob/master/cmd/maildiranasaurus/serve.go) file demonstrates the useage of the `Daemon` struct
+- Lots of examples in api_test.go
