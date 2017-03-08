@@ -317,12 +317,16 @@ Here is how you can [setup log rotation](https://github.com/flashmob/go-guerrill
 
 ### Custom processor
 
-todo
+Use the `d.AddProcessor` to register your processor with the daemon.
+
+Processors allow you to extend the backend. See the 
+[About Backends: introduction, configuring and extending]https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending] documentation for more information.
+
 
 ### Graceful shutdown
 
-In all examples above, we did not shutdown the server, assuming that your program will keep
-busy by doing something else. When it's time to close, we do not want to abruptly close and leave any transactions halfway, we want to do a graceful shutdown and finish off any emails, close files/connections
+In all examples above, we did not shutdown the daemon, assuming that your program will keep
+busy by doing something else. When it's time to close, we don't want to abruptly close and leave any transactions halfway, we want to do a graceful shutdown and finish off any emails, close files/connections
 and then quit. We do this by calling:
 
 `s.Shutdown()`
@@ -336,4 +340,43 @@ complete with a low timeout, then close.
 Once all connections close, the backend gets shuttered and then the Shutdown function returns.
 n.b Why Sayonara? The section of that code was written in Japan ;-)
 
+### Logging stuff
+
+Use `d.Log()` to log stuff.
+
+It uses [logrus](https://github.com/sirupsen/logrus) under the hood. For example:
+
+d := Daemon{}
+l := d.Log().Info("Oh Hai... you're still here?")
+
+In the beginning, the log will go to stderr, but once you do d.Start(), the
+log will point to whatever is specified in the config.
+
 ### Pub/Sub 
+
+Finally, you can subscribe to any config change event if needed by using these:
+
+```go
+// Subscribe for subscribing to config change events
+func (d *Daemon) Subscribe(topic Event, fn interface{}) error
+```
+
+```go
+// for publishing config change events
+func (d *Daemon) Publish(topic Event, args ...interface{}) 
+```
+
+```go
+// for unsubscribing from config change events
+func (d *Daemon) Unsubscribe(topic Event, handler interface{}) 
+```
+
+For example:
+
+```
+pidEvHandler := func(c *AppConfig) {
+	d.Logger.Info("The pid file changed to:", c.PidFile)
+}
+d.Subscribe(EventConfigPidFile, pidEvHandler)
+
+```
