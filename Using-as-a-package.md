@@ -387,3 +387,4 @@ d.Subscribe(EventConfigPidFile, pidEvHandler)
 
 - See [MailDiranasaurus](https://github.com/flashmob/maildiranasaurus) - a project used to get an insight into using go-guerrilla as a package. The [serve.go](https://github.com/flashmob/maildiranasaurus/blob/master/cmd/maildiranasaurus/serve.go) file demonstrates the useage of the `Daemon` struct
 - Lots of examples in api_test.go
+- The main guerrillad program is actually using the API itself. See cmd/go-guerrilla/serve.go
