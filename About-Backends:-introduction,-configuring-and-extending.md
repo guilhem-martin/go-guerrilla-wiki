@@ -118,9 +118,11 @@ var MyFooProcessor = func() backends.Decorator {
 }
 
 ```
-Next, somewhere in the beginning of your code (perhaps in another file), before you create a new go-guerrilla, do this:
+Next, assuming that you're [using go-guerrilla as a package](), do this before you call s.Start():
 ```go
-backends.Service.AddProcessor("MyFoo", MyFooProcessor)
+d := guerrilla.Daemon{}
+d.AddProcessor("MyFoo", MyFooProcessor)
+
 ```
 There are additional features which allow you to do some things at initialization and shutdown.
 
