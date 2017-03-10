@@ -100,7 +100,14 @@ var MyFooProcessor = func() backends.Decorator {
 		return backends.ProcessWith(
 			func(e *mail.Envelope, task backends.SelectTask) (backends.Result, error) {
 				if task == backends.TaskValidateRcpt {
-					// optionally, validate recipient
+					// validate recipient by checking 
+                                        // the last item added to `e.RcptTo` slice
+                                        // if error, then return something like this:
+                                        /* return backends.NewResult(
+							response.Canned.FailNoSenderDataCmd),
+							backends.NoSuchUser
+                                        */
+                                        // if no error:
 					return p.Process(e, task)
 				} else if task == backends.TaskSaveMail {
 					// do some work here
