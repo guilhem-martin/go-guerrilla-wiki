@@ -99,19 +99,19 @@ Here is the `AppConfig` type
 type AppConfig struct {
 	// Servers can have one or more items.  
         /// Defaults to 1 server listening on 127.0.0.1:2525
-	Servers       []ServerConfig         `json:"servers"`
-	// AllowedHosts lists which hosts to accept email for. Defaults to os.Hostname
-	AllowedHosts  []string               `json:"allowed_hosts"`
-	// PidFile is the path for writing out the process id. No output if empty
-	PidFile       string                 `json:"pid_file"`
-	// LogFile is where the logs go. Use path to file, or "stderr", "stdout" 
+        Servers       []ServerConfig         `json:"servers"`
+        // AllowedHosts lists which hosts to accept email for. Defaults to os.Hostname
+        AllowedHosts  []string               `json:"allowed_hosts"`
+        // PidFile is the path for writing out the process id. No output if empty
+        PidFile       string                 `json:"pid_file"`
+        // LogFile is where the logs go. Use path to file, or "stderr", "stdout" 
         // or "off". Default "stderr"
-	LogFile       string                 `json:"log_file,omitempty"`
-	// LogLevel controls the lowest level we log. 
+        LogFile       string                 `json:"log_file,omitempty"`
+        // LogLevel controls the lowest level we log. 
         // "info", "debug", "error", "panic". Default "info"
-	LogLevel      string                 `json:"log_level,omitempty"`
-	// BackendConfig configures the email envelope processing backend
-	BackendConfig backends.BackendConfig `json:"backend_config"`
+        LogLevel      string                 `json:"log_level,omitempty"`
+        // BackendConfig configures the email envelope processing backend
+        BackendConfig backends.BackendConfig `json:"backend_config"`
 }
 ```
 
@@ -125,34 +125,34 @@ Here is the `Servers` struct:
 
 ```go
 type ServerConfig struct {
-	// IsEnabled set to true to start the server, false will ignore it
-	IsEnabled       bool   `json:"is_enabled"`
-	// Hostname will be used in the server's reply to HELO/EHLO. If TLS enabled
-	// make sure that the Hostname matches the cert. Defaults to os.Hostname()
-	Hostname        string `json:"host_name"`
-	// MaxSize is the maximum size of an email that will be accepted for delivery. 
+        // IsEnabled set to true to start the server, false will ignore it
+        IsEnabled       bool   `json:"is_enabled"`
+        // Hostname will be used in the server's reply to HELO/EHLO. If TLS enabled
+        // make sure that the Hostname matches the cert. Defaults to os.Hostname()
+        Hostname        string `json:"host_name"`
+        // MaxSize is the maximum size of an email that will be accepted for delivery. 
         // Defaults to 10 Mebibytes
-	MaxSize         int64  `json:"max_size"`
-	// PrivateKeyFile path to cert private key in PEM format. Will be ignored if blank
-	PrivateKeyFile  string `json:"private_key_file"`
-	// PublicKeyFile path to cert (public key) chain in PEM format. 
+        MaxSize         int64  `json:"max_size"`
+        // PrivateKeyFile path to cert private key in PEM format. Will be ignored if blank
+        PrivateKeyFile  string `json:"private_key_file"`
+        // PublicKeyFile path to cert (public key) chain in PEM format. 
         // Will be ignored if blank
-	PublicKeyFile   string `json:"public_key_file"`
-	// Timeout specifies the connection timeout in seconds. Defaults to 30
-	Timeout         int    `json:"timeout"`
-	// Listen interface specified in <ip>:<port> - defaults to 127.0.0.1:2525
-	ListenInterface string `json:"listen_interface"`
-	// StartTLSOn should we offer STARTTLS command. Cert must be valid. 
+        PublicKeyFile   string `json:"public_key_file"`
+        // Timeout specifies the connection timeout in seconds. Defaults to 30
+        Timeout         int    `json:"timeout"`
+        // Listen interface specified in <ip>:<port> - defaults to 127.0.0.1:2525
+        ListenInterface string `json:"listen_interface"`
+        // StartTLSOn should we offer STARTTLS command. Cert must be valid. 
         // False by default
-	StartTLSOn      bool   `json:"start_tls_on,omitempty"`
-	// TLSAlwaysOn run this server as a pure TLS server, i.e. SMTPS
-	TLSAlwaysOn     bool   `json:"tls_always_on,omitempty"`
-	// MaxClients controls how many maxiumum clients we can handle at once. 
+        StartTLSOn      bool   `json:"start_tls_on,omitempty"`
+        // TLSAlwaysOn run this server as a pure TLS server, i.e. SMTPS
+        TLSAlwaysOn     bool   `json:"tls_always_on,omitempty"`
+        // MaxClients controls how many maxiumum clients we can handle at once. 
         // Defaults to 100
-	MaxClients      int    `json:"max_clients"`
-	// LogFile is where the logs go. Use path to file, or "stderr", "stdout" or "off". 
-	// defaults to AppConfig.Log file setting 
-	LogFile         string `json:"log_file,omitempty"`
+        MaxClients      int    `json:"max_clients"`
+        // LogFile is where the logs go. Use path to file, or "stderr", "stdout" or "off". 
+        // defaults to AppConfig.Log file setting 
+        LogFile         string `json:"log_file,omitempty"`
 
 	// private fields omitted for brevity
 }
@@ -173,9 +173,9 @@ sc := guerrilla.ServerConfig{
 }
 cfg.Servers = append(cfg.Servers, sc)
 bcfg := backends.BackendConfig{
-	"save_workers_size":  3,
-	"process_stack":      "HeadersParser|Header|Hasher|Debugger",
-	"log_received_mails": true,
+        "save_workers_size":  3,
+        "save_process":      "HeadersParser|Header|Hasher|Debugger",
+        "log_received_mails": true,
         "primary_mail_host" : "example.com",
 }
 cfg.BackendConfig = bcfg
@@ -204,8 +204,11 @@ each _Processor_ to see what fields are available for configuration.
 
 The default `Gateway` has its own configuration too. It takes the following fields:
 
-* `save_workers_size`   a number representing the number of workers to run at the same time
-* `process_stack`       A string that configures
+* `save_workers_size` - A number representing the number of workers to run at the same time
+* `save_process`      - A string that configures what processors to use for saving email
+* `validate_process`  - (optional) Similar to `save_process`, however it configures which processors to use for recipient validation.
+* `gw_save_timeout`   - (optional) how many seconds to wait before timing out, for save_process. Default 29 sec.
+* `gw_val_rcpt_timeout` - (optional) how many seconds to wait before timing out, for validate_process. Default 5 sec
 
 The other options, `log_received_mails` is part of the Debugger processor, and `primary_mail_host`
 is from the Header processor.
@@ -230,7 +233,7 @@ Say you have a json configuration file like so:
     "backend_config" :
         {
             "log_received_mails" : true,
-            "process_stack": "HeadersParser|Header|Hasher|Debugger",
+            "save_process": "HeadersParser|Header|Hasher|Debugger",
             "save_workers_size":  3
         },
     "servers" : [
@@ -336,7 +339,7 @@ The way it works is, all connections are given very low timeouts while new conne
  If any clients are in the `command` state, the server will respond to all client's commands with 
 `421 Server is shutting down. Please try again later. Sayonara!`, then close. 
 If the client is in the DATA state, the transaction will not be interrupted and will try to 
-complete with a low timeout, then close. Once all connections close, the backend gets shuttered and then the Shutdown function returns. Should the daemon not close in 60 seconds, it will exist abruptly with `os.Exit(1)`
+complete with a low timeout, then close. Once all connections close, the backend gets shuttered and then the Shutdown function returns. Should the daemon not close in 60 seconds, it will exist forcefully with `os.Exit(1)`
 
 
 ### Logging stuff
