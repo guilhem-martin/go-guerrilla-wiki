@@ -24,7 +24,7 @@ Internally, the task is selected using the SelectTask type. So far, there are tw
 
 ### What are Workers?
 
-Each _Worker_ can be composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick up from a conveyor belt (in this case, a channel). Workers must do a number of steps to complete their work before sending their results back. The steps (Processors) that the worker must do can be controlled by changing the backend's `process_stack` config option.
+Each _Worker_ can be composed of individual _Processors_ and each Processor is called sequentially to process each envelope. Think of it as production line in a factory. Each worker works on one envelope which they pick up from a conveyor belt (in this case, a channel). Workers must do a number of steps to complete their work before sending their results back. The steps (Processors) that the worker must do can be controlled by changing the backend's `save_process` config option.
 
 ### Workers internals
 
@@ -50,7 +50,13 @@ There are a few other details about Processors, if you're interested, please see
 
 The `"backend_config"` property holds the configuration for the backend, including configuration values for all the Processors.
 
-The Gateway requires the following settings: `process_stack` and `save_workers_size`.
+The Gateway requires the following settings: 
+
+- `save_proces` - this a processor for saving email, composed by chaining the smaller processors together. 
+Each processor name is separated by a `|` character and is executed left-to-right.
+- `validate_process` - (optional) similar to `save_proces`, but for validating recipients.
+- `save_workers_size` - how many workers to spawn
+
 Then add any other settings that each processor may require.
 ```json
     "backend_config" :
@@ -68,15 +74,25 @@ Then add any other settings that each processor may require.
           "primary_mail_host":"sharklasers.com"
        }
 ```
-The **process_stack** configures how the worker will process each envelope. 
+To recap, the **save_proces** configures how the worker will process each envelope. 
 Each processor is separated using a "|" (pipe) character, and execution is from left to right.
 So the one above will parse the MIME headers, print some debug info, generate some hashes, add a delivery header, compress the email, save the body to redis, and finally save some info to MySQL.
+
+None of the above processors validate recipients, but if you have a processor that does
+recipient validation, you may add it by setting the `validate_process` config in a similar fashion.
+For example, [MailDiranasaurus](https://github.com/flashmob/maildiranasaurus) a MailDir MTA, demonstrates
+the use of a processor that can both validate recipients and save mail/ 
 
 ### Gateway timeouts
 
 As detailed above, the gateway distributes the envelope to process via the **conveyor** channel.
 The envelope is submitted to the gateway via the Process function. If the email is not
-processed in time, it will return with an error. Currently it is set to 30 seconds.
+processed in time, it will return with an error. Currently the defaul is to 30 seconds.
+
+The default can be customized via Backend config:
+
+- `gw_save_timeout` - is the number of seconds before timeout when saving an email
+- `gw_val_rcpt_timeout` - is how many seconds before timeout when validating a recipient
 
 ## Extending
 
@@ -100,23 +116,26 @@ var MyFooProcessor = func() backends.Decorator {
 		return backends.ProcessWith(
 			func(e *mail.Envelope, task backends.SelectTask) (backends.Result, error) {
 				if task == backends.TaskValidateRcpt {
-					// validate recipient by checking 
-					// the last item added to `e.RcptTo` slice
-					// if error, then return something like this:
-					/* return backends.NewResult(
+
+                                        // if you want your processor to validate recipents,
+                                        // validate recipient by checking 
+                                        // the last item added to `e.RcptTo` slice
+                                        // if error, then return something like this:
+                                        /* return backends.NewResult(
 							response.Canned.FailNoSenderDataCmd),
 							backends.NoSuchUser
-					*/
-					// if no error:
-					return p.Process(e, task)
+                                        */
+                                        // if no error:
+                                        return p.Process(e, task)
 				} else if task == backends.TaskSaveMail {
-					// do some work here
-					// if want to stop processing, return
-					// errors.New("Something went wrong")
-					// return backends.NewBackendResult(fmt.Sprintf("554 Error: %s", err)), err
 
-					// call the next processor in the chain
-					return p.Process(e, task)
+                                        // if you want your processor to do some processing after
+                                        // receiving the email, continue here.
+                                        // if want to stop processing, return
+                                        // errors.New("Something went wrong")
+                                        // return backends.NewBackendResult(fmt.Sprintf("554 Error: %s", err)), err
+                                        // call the next processor in the chain
+                                        return p.Process(e, task)
 				}
 				return p.Process(e, task)
 			},
@@ -224,6 +243,17 @@ eg. just after `backends.Service.AddInitializer(initFunc)` add something like th
 
 ***
 
+### 
+
+Examples
+
+Perhaps it can be best described by giving some examples.
+
+- Example 1: In the api_test.go file in go-guerrilla, about 2/3 down, there is a `funkyLogger` processor
+defined for testing. This processor logs a funky message for tasks `backends.TaskValidateRcpt` and `backends.TaskSaveMail`. See the TestSetAddProcessor where the processor is added, configured, and a test email is sent to the server so it will get processed.
+- Example 2: [MailDir processor](https://github.com/flashmob/maildir-processor) - This saves emails to a maildir folder. It also validates recipients to make sure that their Maildir folder exists (set via the config)
+- Example 3: [FastCGI processor](https://github.com/flashmob/fastcgi-processor) - This forwards the task of processing an email to a Fast CGI backend, such as PHP-FPM. It can save/process emails or validate addresses.
+- Example 4: [MailDiranasaurus](https://github.com/flashmob/maildiranasaurus) - This is an example of using go-guerrilla as a package, and also using MailDir and FastCgi processors.
 
 ## Footnotes
 
