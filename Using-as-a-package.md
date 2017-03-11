@@ -332,7 +332,7 @@ In all examples above, we did not shutdown the daemon, assuming that your progra
 busy by doing something else. When it's time to close, we don't want to abruptly close and leave any transactions halfway, we want to do a graceful shutdown and finish off any emails, close files/connections
 and then quit. We do this by calling:
 
-`s.Shutdown()`
+`d.Shutdown()`
 
 This will block until everything has been shuttered. It may take a while if your server is busy.
 The way it works is, all connections are given very low timeouts while new connections are not accepted.
