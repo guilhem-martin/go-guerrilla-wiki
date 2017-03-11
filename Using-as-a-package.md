@@ -12,6 +12,8 @@ import (
 )
 ```
 
+You may use `$ go get ./...` to get all dependencies, also go-guerrilla uses [glide](https://github.com/Masterminds/glide) for dependency management.
+
 ### Starting a server
 
 This will start a server with the default settings, listening on `127.0.0.1:2525`
