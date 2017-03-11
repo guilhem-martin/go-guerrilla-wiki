@@ -242,9 +242,7 @@ eg. just after `backends.Service.AddInitializer(initFunc)` add something like th
 
 ***
 
-### 
-
-Examples
+### Examples
 
 Perhaps it can be best described by giving some examples.
 
@@ -253,6 +251,10 @@ defined for testing. This processor logs a funky message for tasks `backends.Tas
 - Example 2: [MailDir processor](https://github.com/flashmob/maildir-processor) - This saves emails to a maildir folder. It also validates recipients to make sure that their Maildir folder exists (set via the config)
 - Example 3: [FastCGI processor](https://github.com/flashmob/fastcgi-processor) - This forwards the task of processing an email to a Fast CGI backend, such as PHP-FPM. It can save/process emails or validate addresses.
 - Example 4: [MailDiranasaurus](https://github.com/flashmob/maildiranasaurus) - This is an example of using go-guerrilla as a package, and also using MailDir and FastCgi processors.
+
+### Share your processors
+
+If you made a processor and want to share it with others? Please send a PR to update our README with a link your repo.
 
 ## Footnotes
 
