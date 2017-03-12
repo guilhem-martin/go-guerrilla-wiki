@@ -98,8 +98,10 @@ The default can be customized via Backend config:
 
 The decorator pattern makes it easy to create your own Processors. To get started, create a new .go file, then import
 ```go
-"github.com/flashmob/go-guerrilla/backends"
-"github.com/flashmob/go-guerrilla/mail"
+import (
+   "github.com/flashmob/go-guerrilla/backends"
+   "github.com/flashmob/go-guerrilla/mail"
+)
 ```
 From there, if your processor needs a configuration, define your own configuration struct. The struct can only have string, float or numeric fields. Each field must be public and be annotated with a [struct tag](http://stackoverflow.com/questions/10858787/what-are-the-uses-for-tags-in-go) to map it to the json file. eg.
 ```go
