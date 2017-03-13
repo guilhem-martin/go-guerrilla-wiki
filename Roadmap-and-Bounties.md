@@ -36,6 +36,6 @@ us fund more bounties!
 
 `0x86aDA9f4FB7b547053346d5E96B29370405d05CE` - Ether and also any other type of tokens are welcome.
 
-Note: Due to high fees which make bitcoin impractical for small transactions, in the future, 
+Note: Due to high fees & network congestion which make bitcoin impractical for small transactions, in the future, 
 bounty payouts will be moving to Ethereum. The bitcoin address will be drained first,
 and then switch the bounty awards to quote in ETH.
