@@ -160,7 +160,6 @@ type ServerConfig struct {
 }
 ```
 
-Let's continue for some more examples.
 
 ###  Backend Configuration
 
@@ -220,6 +219,13 @@ Notice that we instantiated a new `bcfg` variable and initialized with a literal
 The keys of the map correspond the jason struct stags, these struct tags are defined in individual `Processor` components. (The above components are defined in the backend package, go file names prefixed with 'p_'.
 
 See the [Backends Documentation](https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending) page for more details
+
+### Registering a Processor
+
+Use the `d.AddProcessor` to register your processor with the daemon.
+
+Processors allow you to extend the backend. See the 
+[About Backends: introduction, configuring and extending]https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending] documentation for more information.
 
 ### Loading config from Json
 
@@ -308,7 +314,7 @@ d.ReloadConfigFile("guerrillad.conf.json")
 
 ```
 
-### Log reopening
+### Log re-opening
 
 To re-open all log files, use:
 
@@ -319,14 +325,6 @@ the file, and then tell the daemon to close the file descriptor and open a new o
 This way no log entries are lost when the file is rotated. 
 
 Here is how you can [setup log rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate) using logrotate(8)
-
-### Custom processor
-
-Use the `d.AddProcessor` to register your processor with the daemon.
-
-Processors allow you to extend the backend. See the 
-[About Backends: introduction, configuring and extending]https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending] documentation for more information.
-
 
 ### Graceful shutdown
 
