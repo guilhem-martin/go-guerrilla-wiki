@@ -35,7 +35,7 @@ Where:
 * `size` or, rotate after 200M or any size you choose. 
 * `rotate 3` - leave 3 days of logs
 * `compress` gzip old files
-* `missingok` don't complain of log file is missing
+* `missingok` don't complain if log file is missing
 * `notifempty` don't rotate if empty
 * `create` create new files with mode, owner, group permissions
 * `su` Use this user to perform all actions
