@@ -52,16 +52,16 @@ The `"backend_config"` property holds the configuration for the backend, includi
 
 The Gateway requires the following settings: 
 
-- `save_proces` - this a processor for saving email, composed by chaining the smaller processors together. 
-Each processor name is separated by a `|` character and is executed left-to-right.
-- `validate_process` - (optional) similar to `save_proces`, but for validating recipients.
+- `save_process` - this a processor for saving email, composed by chaining the smaller processors together. 
+Each processor name is separated by a `|` character and is executed left-to-right. It is called when we receive mail data from a client.
+- `validate_process` - (optional) similar to `save_process`, but for validating recipients. It is called when we receive recipients from a client.
 - `save_workers_size` - how many workers to spawn
 
 Then add any other settings that each processor may require.
 ```json
     "backend_config" :
        {
-          "process_stack": "HeadersParser|Debugger|Hasher|Header|Compressor|Redis|MySql",
+          "save_process": "HeadersParser|Debugger|Hasher|Header|Compressor|Redis|MySql",
           "save_workers_size" : 1,
           "log_received_mails" : true,
           "mysql_db":"gmail_mail",
@@ -74,7 +74,7 @@ Then add any other settings that each processor may require.
           "primary_mail_host":"sharklasers.com"
        }
 ```
-To recap, the **save_proces** configures how the worker will process each envelope. 
+To recap, the **save_process** configures how the worker will process each envelope. 
 Each processor is separated using a "|" (pipe) character, and execution is from left to right.
 So the one above will parse the MIME headers, print some debug info, generate some hashes, add a delivery header, compress the email, save the body to redis, and finally save some info to MySQL.
 
@@ -86,7 +86,7 @@ the use of a processor that can both validate recipients and save mail/
 ### Gateway timeouts
 
 As detailed above, the gateway distributes the envelope to process via the **conveyor** channel.
-The envelope is submitted to the gateway via the Process function. If the email is not
+The envelope is submitted to the gateway via the `Process` function. If the email is not
 processed in time, it will return with an error. Currently the defaul is to 30 seconds.
 
 The default can be customized via Backend config:
@@ -96,7 +96,7 @@ The default can be customized via Backend config:
 
 ## Extending
 
-The decorator pattern makes it easy to create your own Processors. To get started, create a new .go file, then import
+The decorator pattern makes it easy to create your own Processors. To get started, create a new `.go` file, then import
 ```go
 import (
    "github.com/flashmob/go-guerrilla/backends"
