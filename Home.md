@@ -13,6 +13,7 @@
    - [Roadmap and Bounties](https://github.com/flashmob/go-guerrilla/wiki/Roadmap-and-Bounties)
 - Testing
    - [Fuzz Testing](https://github.com/flashmob/go-guerrilla/wiki/Fuzz-testing)
+   - [Profiling](https://github.com/flashmob/go-guerrilla/wiki/Profiling)
 - [Random Dev notes](https://github.com/flashmob/go-guerrilla/wiki/Dev-Notes)
    - [Debugger Configuration](https://github.com/flashmob/go-guerrilla/wiki/Dev-Notes#debugger-configuration)
    - [Random Links](https://github.com/flashmob/go-guerrilla/wiki/Dev-Notes#random-links)
