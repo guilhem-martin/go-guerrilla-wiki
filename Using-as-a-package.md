@@ -331,6 +331,22 @@ d.ReloadConfigFile("guerrillad.conf.json")
 
 ***
 
+### Logging stuff
+
+Use `d.Log()` to log stuff.
+
+It uses [logrus](https://github.com/sirupsen/logrus) under the hood. For example:
+
+```go
+d := guerrilla.Daemon{}
+l := d.Log().Info("Hello Sir! It's a fine day for a cup of tea.")
+```
+
+In the beginning, the log will go to stderr, but once you do d.Start(), the
+log will point to whatever is specified in the config.
+
+***
+
 ### Log re-opening
 
 To re-open all log files, use:
@@ -360,22 +376,6 @@ The way it works is, all connections are given very low timeouts while new conne
 If the client is in the DATA state, the transaction will not be interrupted and will try to 
 complete with a low timeout, then close. Once all connections close, the backend gets shuttered and then the Shutdown function returns. Should the daemon not close in 60 seconds, it will exist forcefully with `os.Exit(1)`
 
-
-***
-
-### Logging stuff
-
-Use `d.Log()` to log stuff.
-
-It uses [logrus](https://github.com/sirupsen/logrus) under the hood. For example:
-
-```go
-d := guerrilla.Daemon{}
-l := d.Log().Info("Hello Sir! It's a fine day for a cup of tea.")
-```
-
-In the beginning, the log will go to stderr, but once you do d.Start(), the
-log will point to whatever is specified in the config.
 
 ***
 
