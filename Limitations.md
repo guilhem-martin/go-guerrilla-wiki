@@ -1,0 +1,3 @@
+### Size extension
+
+The daemon doesn't fully implement the SIZE extension. Only SIZE with an argument is supported. The argument is a number of maximum bytes for each message. It does not support SIZE argument at the end of MAIL FROM. Such a feature may be useful for giving different clients custom sizes for various reasons. However, no such need is required yet. PR welcome if you need this. See more discussion about SIZE https://cr.yp.to/smtp/size.html
