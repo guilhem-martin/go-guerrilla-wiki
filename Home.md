@@ -1,12 +1,15 @@
 
 
-### Welcome to the go-guerrilla wiki!
+## Welcome to the go-guerrilla wiki!
+
+### Table of contents
 
 - News
    - [Change Log](https://github.com/flashmob/go-guerrilla/wiki/Change-Log)
 - Running / Deploying
    - [Log file rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate)
    - [Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration)
+   - [Using Nginx as a proxy](https://github.com/flashmob/go-guerrilla/wiki/Using-Nginx-as-a-proxy)
 - Developing / Extending
    - [Using as a package](https://github.com/flashmob/go-guerrilla/wiki/Using-as-a-package)
    - [Backends](https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending)
