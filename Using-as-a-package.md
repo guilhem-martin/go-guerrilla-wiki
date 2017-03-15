@@ -311,10 +311,9 @@ is that the max-clients cannot be resized since our current pool implementation 
 ```go
 
 d := guerrilla.Daemon{}
-_, err = d.LoadConfig("guerrillad.conf.json")
+ac, err = d.LoadConfig("guerrillad.conf.json")
 if err != nil {
-	fmt.Println("ReadConfig error", err)
-		
+	fmt.Println("ReadConfig error", err)	
 }
 
 err = d.Start()
@@ -351,7 +350,7 @@ log will point to whatever is specified in the config.
 
 To re-open all log files, use:
 
-`d.ReopenLogs()`
+`d.ReopenLogs() error`
 
 Why would you want to reopen log files? A common way to rotate logs is to rename
 the file, and then tell the daemon to close the file descriptor and open a new one.
