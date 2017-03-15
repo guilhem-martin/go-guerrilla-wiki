@@ -232,7 +232,7 @@ if err != nil {
 
 #### Registering a Processor
 
-Use the `d.AddProcessor` to register your processor with the daemon.
+Use the `d.AddProcessor` function to register your processor with the daemon.
 
 Processors allow you to extend the backend. See the 
 [About Backends: introduction, configuring and extending]https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending] documentation for more information.
