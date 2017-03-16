@@ -2,8 +2,7 @@
 At present, not much here yet!
 There is an open bounty for profiling on our [Roadmap and Bounties](https://github.com/flashmob/go-guerrilla/wiki/Roadmap-and-Bounties) page.
 
-Benchmarking:
-==========================================================
+### Benchmarking:
 
 https://web.archive.org/web/20110725141905/http://www.jrh.org/smtp/index.html
 
