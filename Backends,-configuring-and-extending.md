@@ -91,8 +91,10 @@ processed in time, it will return with an error. Currently the defaul is to 30 s
 
 The default can be customized via Backend config:
 
-- `gw_save_timeout` - is the number of seconds before timeout when saving an email
-- `gw_val_rcpt_timeout` - is how many seconds before timeout when validating a recipient
+- `gw_save_timeout` - is the duration before timeout when saving an email. String, eg "10s" 
+- `gw_val_rcpt_timeout` - is the duration before timeout when validating a recipient, string, eg "1s"
+
+For formatting options for the duration string, see Go's [time.ParseDuration](https://golang.org/pkg/time/#ParseDuration)
 
 ## Extending
 
