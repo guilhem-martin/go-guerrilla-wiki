@@ -186,8 +186,8 @@ The default `Gateway` has its own configuration too. It takes the following fiel
 * `save_workers_size` - A number representing the number of workers to run at the same time
 * `save_process`      - A string that configures what processors to use for saving email
 * `validate_process`  - (optional) Similar to `save_process`, however it configures which processors to use for recipient validation.
-* `gw_save_timeout`   - (optional) how many seconds to wait before timing out, for save_process. Default 29 sec.
-* `gw_val_rcpt_timeout` - (optional) how many seconds to wait before timing out, for validate_process. Default 5 sec
+* `gw_save_timeout`   - (optional, string) duration to wait before timing out, for save_process. Default 29 sec. eg "29s"
+* `gw_val_rcpt_timeout` - (optional, string) duration to wait before timing out, for validate_process. Default 5 sec, eg "5s"
 
 The other options, `log_received_mails` is part of the Debugger processor, and `primary_mail_host`
 is from the Header processor.
