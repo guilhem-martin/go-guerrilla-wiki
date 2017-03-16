@@ -31,7 +31,7 @@ write out the process-id (pid) to a file.
 
 ## Re-open log file
 
-Use `kill -USER1 <process-id>`
+Use `kill -USR1 <process-id>`
 
 This is used for [log rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate).
 
@@ -49,4 +49,10 @@ The >> means redirect-and-append.
 The 2>&1 means redirect errors and output.
 The & at the end means run it in the background. 
 
-If you want to look at the messages live, you can than open another console and tail it
+If you want to look at the messages live, you can than open another console and tail it.
+
+### Testing STARTTLS
+
+Use openssl to check if you have configured TLS properly:
+
+    $ openssl s_client -starttls smtp -crlf -connect 127.0.0.1:2526
