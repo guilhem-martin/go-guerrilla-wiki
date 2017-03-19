@@ -14,7 +14,6 @@ Next, lets create a table in MySQL:
 	  `to` varchar(256) character set latin1 NOT NULL,
 	  `subject` varchar(255) NOT NULL,
 	  `body` varchar(16) NOT NULL,
-	  `charset` varchar(32) character set latin1 NOT NULL,
 	  `mail` longblob NOT NULL,
 	  `spam_score` float NOT NULL,
 	  `hash` char(32) character set latin1 NOT NULL,
