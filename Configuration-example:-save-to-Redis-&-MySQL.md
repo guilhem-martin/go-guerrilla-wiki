@@ -18,7 +18,7 @@ Next, lets create a table in MySQL:
 	  `spam_score` float NOT NULL,
 	  `hash` char(32) character set latin1 NOT NULL,
 	  `content_type` varchar(64) character set latin1 NOT NULL,
-	  `recipient` varchar(255) character set latin1 NOT NULL COMMENT 'set by the MAIL FROM command. Can be empty to indicate a bounce, i.e <>';,
+	  `recipient` varchar(255) character set latin1 NOT NULL COMMENT 'set by the MAIL FROM command. Can be empty to indicate a bounce, i.e <>',
 	  `has_attach` int(11) NOT NULL,
 	  `ip_addr` varbinary(16) NOT NULL,
 	  `return_path` VARCHAR(255) NOT NULL,
