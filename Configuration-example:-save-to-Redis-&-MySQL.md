@@ -58,6 +58,11 @@ The ip_address is packed into a 16 byte binary.
 For details see this [stack overflow](http://stackoverflow.com/questions/5133580/which-mysql-datatype-to-use-for-an-ip-address) answer.
 Eg, In MySQL, one would use `select INET6_NTOA(ip_addr) from new;` and in PHP one would use `inet_ntop` function to get the human readable format.
 
+#### from, to, recipient, return_path and sender columns
+
+These columns are always the extracted email address, and do not include sender name.
+See individual comments embedded in the table definition SQL for details.
+
 #### Indexes
 
 By there's an index on `to` `hash` and `date`. Adding indexes may reduce insert performance, it's up to whenever you want to keep these or not, or add more. 
