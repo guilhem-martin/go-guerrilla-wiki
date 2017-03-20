@@ -1,10 +1,46 @@
 
-### This is a stub.
+### Prerequisites
 
 
 Assuming you have Redis and MySQL already installed for this example.
 
-Next, let's create a table in MySQL:
+### Configuration
+
+In your Go-Guerrilla configuration, configure the "backend_config" property like so:
+
+```json
+
+"backend_config" :
+  {
+    "save_process": "HeadersParser|Debugger|Hasher|Header|Compressor|Redis|MySql",
+    "log_received_mails" : true,
+    "mysql_db":"gmail_mail",
+    "mysql_host":"127.0.0.1:3306",
+    "mysql_pass":"ok",
+    "mysql_user":"root",
+    "mysql_mail_table":"new",
+    "redis_interface" : "127.0.0.1:6379",
+    "redis_expire_seconds" : 7200,
+    "save_workers_size" : 1,
+    "primary_mail_host":"sharklasers.com"
+  },
+```
+
+The `save_process` property defines which processors will be called in sequence from left to right.
+it will first parse the headers using the HeadersParser processor, and finally save the email body to redis
+and other data to Mysql. The other settings are pretty much self explanatory.
+Note that you may add other processors to the `save_process` setting if you like. 
+
+Note that the MySQL & Redis processors is rely on the following processors:
+
+- HeadersParser` for header parsing, to get such fields as the Subject, To and Reply-to headers, but doesn't really need it. 
+- The Hasher is used to derive the redis key for storing the email body. 
+- The `Compressor` doesn't actually compress anything, it just sets up a compressor that the Redis or MySQL processor will use if they find that it was set.
+- The 'Header' will fill the envelope with delivery header fields, so that when the body is saved with the delievry header fields.
+
+### MySQL table setup
+
+Let's create a table in MySQL:
 
 ```sql
 CREATE TABLE IF NOT EXISTS `new` (
