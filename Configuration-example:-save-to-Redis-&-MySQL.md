@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS `new` (
 #### mail_id and message_id
 
 `mail_id` is the primary auto-increment key, `message_id` is a value that was parsed from the email headers.
-If not present in the headers, it will use `<hash>.<local-part-to>@<primary_mail_host>` - where <primary_mail_host>
-comes from the config, <hash> is the hash of the body, <local-part-to> is the local part of the recipient address.
+If not present in the headers, it will use `<hash>.<local-part-to>@<primary_mail_host>` - where `<primary_mail_host>`
+comes from the config, `<hash>` is the hash of the body, `<local-part-to>` is the local part of the recipient address.
 
 
 #### mail and body columns
@@ -62,6 +62,11 @@ Eg, In MySQL, one would use `select INET6_NTOA(ip_addr) from new;` and in PHP on
 
 These columns are always the extracted email address, and do not include sender name.
 See individual comments embedded in the table definition SQL for details.
+
+#### other columns
+
+Columns `has_attach` and `spam_score` are unused. Perhaps in the future these may be populated,
+or your system could populate later in the pipeline. 
 
 #### Indexes
 
