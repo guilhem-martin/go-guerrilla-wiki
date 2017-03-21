@@ -13,18 +13,12 @@ Copy `goguerrilla.conf.sample` to `goguerrilla.conf.json`
         "pid_file" : "/var/run/go-guerrilla.pid", // pid = process id, so that other programs can send signals to our server
         "log_file" : "stderr", // can be "off", "stderr", "stdout" or any path to a file
         "log_level" : "info", // can be  "debug", "info", "error", "warn", "fatal", "panic"
-        "backend_name": "guerrilla-db-redis", // what backend to use for saving email. See /backends dir
         "backend_config" :
             {
-                "mysql_db":"gmail_mail",
-                "mysql_host":"127.0.0.1:3306",
-                "mysql_pass":"ok",
-                "mysql_user":"root",
-                "mail_table":"new_mail",
-                "redis_interface" : "127.0.0.1:6379",
-                "redis_expire_seconds" : 7200,
-                "save_workers_size" : 3,
-                "primary_mail_host":"sharklasers.com"
+                "log_received_mails": true,
+                "save_workers_size": 1,
+                "save_process" : "HeadersParser|Header|Debugger",
+                "primary_mail_host" : "mail.example.com"
             },
         "servers" : [ // the following is an array of objects, each object represents a new server that will be spawned
             {
@@ -65,4 +59,7 @@ http://jsonlint.com/#
 ### Backend Configuration
 
 backend configuration details here:
-https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending#configuration
+https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending
+
+#### Saving to MySQL & Redis
+Here is the page discussing how to configure saving to [Redis and MySQL](https://github.com/flashmob/go-guerrilla/wiki/Configuration-example:-save-to-Redis-&-MySQL): 
