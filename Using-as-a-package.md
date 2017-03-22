@@ -1,4 +1,3 @@
-**Note: Work in progress. Not merged yet.**
 
 ## Go-guerrilla API
 
