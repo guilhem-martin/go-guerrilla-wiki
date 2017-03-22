@@ -1,8 +1,5 @@
 # Backends 
 
-This documents the backends package.
-
-Note: Work in progress. Not merged yet.
 
 ## Introduction
 
