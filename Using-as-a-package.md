@@ -195,8 +195,7 @@ is from the Header processor.
 Notice that we instantiated a new `bcfg` variable and initialized with a literal, just like initializing a map. 
 The keys of the map correspond the jason struct stags, these struct tags are defined in individual `Processor` components. (The above components are defined in the backend package, go file names prefixed with 'p_'.
 
-See the [Backends Documentation](https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending) page for more details
-
+See the [Backends Documentation](https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending) for more information.
 
 ####  Backend Configuration
 
@@ -234,7 +233,7 @@ if err != nil {
 Use the `d.AddProcessor` function to register your processor with the daemon.
 
 Processors allow you to extend the backend. See the 
-[About Backends: introduction, configuring and extending]https://github.com/flashmob/go-guerrilla/wiki/About-Backends:-introduction,-configuring-and-extending] documentation for more information.
+[Backends Documentation](https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending) for more information.
 
 
 ***
