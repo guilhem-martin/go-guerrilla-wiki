@@ -65,6 +65,24 @@ Why proxy SMTP with Nginx?
 		}
 
 
+### Configuring Go-guerrilla
+
+In your server configuration json file, add `xclient_on` which is a boolean value, set to `true`. Eg.
+
+    {
+            "is_enabled" : true,
+            "host_name":"mail.test.com",
+            "max_size": 1000000,
+            "private_key_file":"/path/to/pem/file/test.com.key",
+            "public_key_file":"/path/to/pem/file/test.com.crt",
+            "timeout":180,
+            "listen_interface":"127.0.0.1:25",
+            "start_tls_on":true,
+            "tls_always_on":false,
+            "max_clients": 1000,
+            "log_file" : "stderr",
+            "xclient_on" : true
+        }
 
 Resources:
 
