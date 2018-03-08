@@ -108,7 +108,7 @@ By there's an index on `to` `hash` and `date`. Adding indexes may reduce insert 
 
 ### Changes
 
-#### 2018-03-09 - Allow SQL backend use alternative drivers.
+#### 2018-03-09 - Allow SQL backend use alternative drivers. Issue #94
 
 
 This change renamed the MySQL processor to `Sql` and added the following config options
