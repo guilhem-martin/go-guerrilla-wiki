@@ -106,9 +106,9 @@ or your system could populate later in the pipeline.
 
 By there's an index on `to` `hash` and `date`. Adding indexes may reduce insert performance, it's up to whenever you want to keep these or not, or add more. 
 
-#### Changes
+### Changes
 
-# 2018-03-09 - Allow SQL backend use alternative drivers.
+#### 2018-03-09 - Allow SQL backend use alternative drivers.
 
 
 This change renamed the MySQL processor to `Sql` and added the following config options
