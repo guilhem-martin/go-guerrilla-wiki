@@ -12,13 +12,11 @@ In your Go-Guerrilla configuration, configure the "backend_config" property like
 
 "backend_config" :
   {
-    "save_process": "HeadersParser|Debugger|Hasher|Header|Compressor|Redis|MySql",
+    "save_process": "HeadersParser|Debugger|Hasher|Header|Compressor|Redis|Sql",
     "log_received_mails" : true,
-    "mysql_db":"gmail_mail",
-    "mysql_host":"127.0.0.1:3306",
-    "mysql_pass":"ok",
-    "mysql_user":"root",
-    "mysql_mail_table":"new",
+    "sql_driver": "mysql",
+    "sql_dsn": "root:ok@tcp(127.0.0.1:3306)/gmail_mail?readTimeout=10&writeTimeout=10",
+    "mail_table":"new",
     "redis_interface" : "127.0.0.1:6379",
     "redis_expire_seconds" : 7200,
     "save_workers_size" : 1,
@@ -107,3 +105,24 @@ or your system could populate later in the pipeline.
 #### Indexes
 
 By there's an index on `to` `hash` and `date`. Adding indexes may reduce insert performance, it's up to whenever you want to keep these or not, or add more. 
+
+#### Changes
+
+# 2018-03-09 - Allow SQL backend use alternative drivers.
+
+
+This change renamed the MySQL processor to `Sql` and added the following config options
+
+```
+"sql_driver": "mysql",
+"sql_dsn": "root:ok@tcp(127.0.0.1:3306)/gmail_mail?readTimeout=10&writeTimeout=10",
+```
+
+removing the following
+
+```
+"mysql_db":"gmail_mail",
+"mysql_host":"127.0.0.1:3306",
+"mysql_pass":"ok",
+"mysql_user":"root",
+```
