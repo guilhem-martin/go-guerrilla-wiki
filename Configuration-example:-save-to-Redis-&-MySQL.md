@@ -126,3 +126,5 @@ removing the following
 "mysql_pass":"ok",
 "mysql_user":"root",
 ```
+
+renamed `redis_mysql_batch_timeout` to `redis_sql_batch_timeout`
