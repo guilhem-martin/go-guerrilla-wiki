@@ -2,7 +2,7 @@
 ### Prerequisites
 
 
-Assuming you have Redis and MySQL already installed for this example.
+Assuming you have Redis and SQL already installed for this example. (Or SQL driver of your choice)
 
 ### Configuration
 
@@ -26,19 +26,19 @@ In your Go-Guerrilla configuration, configure the "backend_config" property like
 
 The `save_process` property defines which processors will be called in sequence from left to right.
 it will first parse the headers using the HeadersParser processor, and finally save the email body to redis
-and other data to Mysql. The other settings are pretty much self explanatory.
+and other data to SQL. The other settings are pretty much self explanatory.
 Note that you may add other processors to the `save_process` setting if you like. 
 
-Note that the MySQL & Redis processors is rely on the following processors:
+Note that the SQL & Redis processors is rely on the following processors:
 
 - HeadersParser` for header parsing, to get such fields as the Subject, To and Reply-to headers, but doesn't really need it. 
 - The Hasher is used to derive the redis key for storing the email body. 
-- The `Compressor` doesn't actually compress anything, it just sets up a compressor that the Redis or MySQL processor will use if they find that it was set.
+- The `Compressor` doesn't actually compress anything, it just sets up a compressor that the Redis or SQL processor will use if they find that it was set.
 - The 'Header' will fill the envelope with delivery header fields, so that when the body is saved with the delievry header fields.
 
-### MySQL table setup
+### SQL table setup
 
-Let's create a table in MySQL:
+Let's create a table (example below may be using MySQL specific features):
 
 ```sql
 CREATE TABLE IF NOT EXISTS `new` (
