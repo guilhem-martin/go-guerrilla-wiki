@@ -15,7 +15,7 @@ In your Go-Guerrilla configuration, configure the "backend_config" property like
     "save_process": "HeadersParser|Debugger|Hasher|Header|Compressor|Redis|Sql",
     "log_received_mails" : true,
     "sql_driver": "mysql",
-    "sql_dsn": "root:ok@tcp(127.0.0.1:3306)/gmail_mail?readTimeout=10&writeTimeout=10",
+    "sql_dsn": "root:ok@tcp(127.0.0.1:3306)/gmail_mail?readTimeout=10s&writeTimeout=10s",
     "mail_table":"new",
     "redis_interface" : "127.0.0.1:6379",
     "redis_expire_seconds" : 7200,
@@ -115,7 +115,7 @@ This change renamed the MySQL processor to `Sql` and added the following config 
 
 ```
 "sql_driver": "mysql",
-"sql_dsn": "root:ok@tcp(127.0.0.1:3306)/gmail_mail?readTimeout=10&writeTimeout=10",
+"sql_dsn": "root:ok@tcp(127.0.0.1:3306)/gmail_mail?readTimeout=10s&writeTimeout=10s",
 ```
 
 removing the following
