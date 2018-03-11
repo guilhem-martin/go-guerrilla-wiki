@@ -33,4 +33,6 @@ Also, use the underscore `_` character in front of the import.
 
 For an example, see `cmd/guerrillad/serve.go` - it imports `github.com/flashmob/go-guerrilla/mail/encoding` which causes the `MimeHeaderDecode` function to use `golang.org/x/net/html/charset`
 
+### Getting errors when building with iconv?
+
 Note that when using iconv, to build, your system would need the GNU library headers. I.e. typically install with `sudo apt-get install libc6-dev`. 
