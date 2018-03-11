@@ -6,6 +6,7 @@
 
 - News
    - [Change Log](https://github.com/flashmob/go-guerrilla/wiki/Change-Log)
+- [Build Notes](https://github.com/flashmob/go-guerrilla/wiki/Build-Notes)
 - Running / Deploying
    - [Log file rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate)
    - [Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration)
