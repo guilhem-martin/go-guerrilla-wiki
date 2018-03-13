@@ -1,5 +1,3 @@
-
-
 ## Welcome to the go-guerrilla wiki!
 
 ### Table of contents
@@ -8,7 +6,7 @@
    - [Change Log](https://github.com/flashmob/go-guerrilla/wiki/Change-Log)
 - [Build Notes](https://github.com/flashmob/go-guerrilla/wiki/Build-Notes)
 - Running / Deploying
-   - [Deploy on POSIX](https://github.com/flashmob/go-guerrilla/wiki/Deploying-(POSIX-system)) - starting commands, permissions & DNS config
+   - [Deploy on POSIX](https://github.com/flashmob/go-guerrilla/wiki/Deploying-(on-a-POSIX-system)) - starting commands, permissions & DNS config
    - [Log file rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate)
    - [Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration)
    - [Using Nginx as a proxy](https://github.com/flashmob/go-guerrilla/wiki/Using-Nginx-as-a-proxy)
