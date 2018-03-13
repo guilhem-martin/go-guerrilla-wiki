@@ -8,6 +8,8 @@ Create a user just for running the server, eg ‘gmail’ user:
 
 Place the guerrillad executable in the home directory (or any location of your choice, eg `/usr/local/bin` would be nice too)
 
+### Permissions
+
 Give permission for the guerrillad executable so that it can access port 25 (and all other privileged ports) like so:
 
 ```
@@ -20,7 +22,7 @@ If the host is behind a firewall, open port 25:
 $ sudo iptables -I INPUT -p tcp -m tcp --dport 25 -j ACCEPT
 ```
 
-### Starting command: 
+### Starting command 
 
 This will put the guerrillad process in the background:
 
@@ -36,7 +38,7 @@ If the process is started by a wheel user, (typically root), use sudo to drop do
 $ sudo -i -u gmail /home/gmail/guerrillad -c /home/gmail/goguerrilla.conf serve >> /home/gmail/smtpd_out.log 2>&1 &
 ```
 
-#### Starting automatically on boot:
+#### Starting automatically on boot
 
 
 Place the starting command at the bottom of the /etc/rc.local file.
