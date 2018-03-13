@@ -77,5 +77,7 @@ $ sudo sudo usermod -a -G ssl-cert gmail
 
 ### See also
 [Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration)
+
 [Log file rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate)
+
 [Use Nginx as a proxy](https://github.com/flashmob/go-guerrilla/wiki/Using-Nginx-as-a-proxy)
