@@ -8,7 +8,7 @@ Create a user just for running the server, eg ‘gmail’ user:
 
 Place the guerrillad executable in the home directory (or any location of your choice, eg `/usr/local/bin` would be nice too)
 
-Give permission for the guerrillad executable so that it can access port 80 (and all other privileged ports) like so:
+Give permission for the guerrillad executable so that it can access port 25 (and all other privileged ports) like so:
 
 ```
 $ sudo setcap 'cap_net_bind_service=+ep' /home/gmail/guerrillad
