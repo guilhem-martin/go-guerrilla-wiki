@@ -1,20 +1,21 @@
 Deploying guerrillad on a POSIX system
+###
 
 Create a special user just for running the server, eg ‘gmail’ user:
 
-$ useradd -m gmail
+`$ useradd -m gmail`
 
-Place the guerrillad executable in the home (or any location of your choice, eg /usr/local/bin would be nice too)
+Place the guerrillad executable in the home (or any location of your choice, eg `/usr/local/bin` would be nice too)
 
 Give permission for the guerrillad executable so that it can access port 80 (and all other privileged ports)
 
-$ sudo setcap 'cap_net_bind_service=+ep' /home/gmail/guerrillad
+`$ sudo setcap 'cap_net_bind_service=+ep' /home/gmail/guerrillad`
 
 Starting command: 
 
 This will put the guerrillad process in the background:
 
-$ /home/gmail/guerrillad -c /home/gmail/goguerrilla.conf serve >> /home/gmail/smtpd_out.log 2>&1 &
+`$ /home/gmail/guerrillad -c /home/gmail/goguerrilla.conf serve >> /home/gmail/smtpd_out.log 2>&1 &`
 
 Notice that the errors (stdout) are redirected to standard output (stdout). If the server doesn’t start, please inspect the smtpd_out.log file for errors.
 
