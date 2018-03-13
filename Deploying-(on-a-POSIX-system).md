@@ -14,6 +14,12 @@ Give permission for the guerrillad executable so that it can access port 25 (and
 $ sudo setcap 'cap_net_bind_service=+ep' /home/gmail/guerrillad
 ```
 
+If the host is behind a firewall, open port 25:
+
+```
+$ sudo iptables -I INPUT -p tcp -m tcp --dport 25 -j ACCEPT
+```
+
 ### Starting command: 
 
 This will put the guerrillad process in the background:
@@ -40,15 +46,15 @@ Place the starting command at the bottom of the /etc/rc.local file.
 
 Once your server is running, you need to tell others how to find your server. You do that by setting an MX record for your DNS Zone. The MX record tells everyone the host-name of the server that accepts email for your domain. A domain may have multiple MX records for redundancy, but here we’ll have just one. Your mail server will also need an A record (i.e a host-name that is pointing to some IP address)
 
-Create a sub-domain for your server, by adding an A record. A popular subdomain host-name choice could be ‘smtp’, eg. smtp.example.com - make sure to point it to the IP address of your guerrillad server
-Add a new MX record, with the above host-name. Use 0 for the priority, typically enter @ in the name field, and the full host-name
-Delete any other MX records
+Create a sub-domain for your server, by adding an A record. A popular subdomain host-name choice could be ‘smtp’, eg. smtp.example.com - point it to the IP address of your guerrillad server.
+
+Add a new MX record, with the above host-name. Use 0 for the priority, typically enter @ if there is a Name field, and the full host-name in the host field. Important: Delete any other previous MX records.
 
 Tip: The sub-domain that you have created in step 1 should also match the ‘host_name’ configuration setting in the goguerrilla.conf config file. If setting up an SSL certificate, make sure that the certificate subject also matches the ‘host_name’
 
 ## Let’s Encrypt
 
-So you’re using LE? Great - it’s awesome! The server would need to be able to have permission to access the keys to these, if running with the low privileged user. Here are some steps to allow access:
+If you're using LE, the server would need to be able to have permission to access the keys located in `/etc/letsencrypt`, if running with the low privileged user. Here are some steps to allow access:
 
 Add a new ssl-group
 
@@ -68,3 +74,4 @@ Now add the gmail user to the ssl-cet group
 ```
 $ sudo sudo usermod -a -G ssl-cert gmail
 ```
+
