@@ -75,3 +75,5 @@ Now add the gmail user to the ssl-cet group
 $ sudo sudo usermod -a -G ssl-cert gmail
 ```
 
+### See also
+[Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration)
