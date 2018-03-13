@@ -1,6 +1,8 @@
 ## Deploying guerrillad on a POSIX system
 
-### Create a special user just for running the server, eg ‘gmail’ user:
+### Create a special user 
+
+Create a user just for running the server, eg ‘gmail’ user:
 
 `$ useradd -m gmail`
 
@@ -28,8 +30,8 @@ If the process is started by a wheel user, (typically root), use sudo to drop do
 $ sudo -i -u gmail /home/gmail/guerrillad -c /home/gmail/goguerrilla.conf serve >> /home/gmail/smtpd_out.log 2>&1 &
 ```
 
-Starting automatically on boot:
-####
+#### Starting automatically on boot:
+
 
 Place the starting command at the bottom of the /etc/rc.local file.
 
