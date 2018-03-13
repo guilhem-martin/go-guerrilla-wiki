@@ -48,7 +48,7 @@ Once your server is running, you need to tell others how to find your server. Yo
 
 Create a sub-domain for your server, by adding an A record. A popular subdomain host-name choice could be ‘smtp’, eg. smtp.example.com - point it to the IP address of your guerrillad server.
 
-Add a new MX record, with the above host-name. Use 0 for the priority, typically enter @ if there is a Name field, and the full host-name in the host field. Important: Delete any other previous MX records.
+Add a new MX record, with the above host-name. Use 0 for the priority, typically enter @ if there is a Name field, and the full host-name in the Host field. Important: Delete any other previous MX records.
 
 Tip: The sub-domain that you have created in step 1 should also match the ‘host_name’ configuration setting in the goguerrilla.conf config file. If setting up an SSL certificate, make sure that the certificate subject also matches the ‘host_name’
 
