@@ -52,13 +52,19 @@ So you’re using LE? Great - it’s awesome! The server would need to be able t
 
 Add a new ssl-group
 
+```
 $ sudo addgroup ssl-cert
+```
 
 Give access to the ssl-cert group, including all sub-directories
 
+```
 $ sudo chgrp -R ssl-cert /etc/letsencrypt
 $ sudo chmod -R g=rX /etc/letsencrypt
+```
 
 Now add the gmail user to the ssl-cet group
 
+```
 $ sudo sudo usermod -a -G ssl-cert gmail
+```
