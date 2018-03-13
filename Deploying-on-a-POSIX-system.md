@@ -64,7 +64,7 @@ Add a new ssl-group
 $ sudo addgroup ssl-cert
 ```
 
-Give access to the ssl-cert group, including all sub-directories
+Give access to the ssl-cert group, including all sub-directories. 
 
 ```
 $ sudo chgrp -R ssl-cert /etc/letsencrypt
