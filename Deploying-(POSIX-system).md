@@ -25,13 +25,17 @@ Notice that the errors (stdout) are redirected to standard output (stdout). If t
 
 If the process is started by a wheel user, (typically root), use sudo to drop down to a lower user:
 
+```shell
 $ sudo -i -u gmail /home/gmail/guerrillad -c /home/gmail/goguerrilla.conf serve >> /home/gmail/smtpd_out.log 2>&1 &
+```
 
 Starting automatically on boot:
+####
 
 Place the starting command at the bottom of the /etc/rc.local file.
 
 DNS Settings
+###
 
 Once your server is running, you need to tell others how to find your server. You do that by setting an MX record for your DNS Zone. The MX record tells everyone the host-name of the server that accepts email for your domain. A domain may have multiple MX records for redundancy, but here we’ll have just one. Your mail server will also need an A record (i.e a host-name that is pointing to some IP address)
 
@@ -42,6 +46,7 @@ Delete any other MX records
 Tip: The sub-domain that you have created in step 1 should also match the ‘host_name’ configuration setting in the goguerrilla.conf config file. If setting up an SSL certificate, make sure that the certificate subject also matches the ‘host_name’
 
 Let’s Encrypt
+###
 
 So you’re using LE? Great - it’s awesome! The server would need to be able to have permission to access the keys to these, if running with the low privileged user. Here are some steps to allow access:
 
