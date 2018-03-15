@@ -1,6 +1,6 @@
 ## Deploying guerrillad on a POSIX system (Linux/Darwin/BSD/etc)
 
-Assuming that you have [built the binary](https://github.com/flashmob/go-guerrilla/wiki/Build-Notes) already, it's now ready to deploy to production. Let's get to it!
+Assuming that you have [built the binary](https://github.com/flashmob/go-guerrilla/wiki/Build-Notes) already, it's now ready to deploy to production. The following document is a suggestion for deployment in production.
 
 ### Create a special user 
 
