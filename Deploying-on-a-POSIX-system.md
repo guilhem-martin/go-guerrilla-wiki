@@ -1,4 +1,4 @@
-## Deploying guerrillad on a POSIX system
+## Deploying guerrillad on a POSIX system (Linux/Darwin/BSD/etc)
 
 ### Create a special user 
 
