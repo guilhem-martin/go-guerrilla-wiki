@@ -62,7 +62,7 @@ Tip: The sub-domain that you have created in step 1 should also match the ‘hos
 
 If you're using LE, the server would need to have permission to access the keys located in `/etc/letsencrypt`, if running with under a low privileged user then we need to do some extra steps:
 
-Add a new ssl-group
+Create a new group, say `ssl-cert`
 
 ```
 $ sudo addgroup ssl-cert
@@ -75,7 +75,7 @@ $ sudo chgrp -R ssl-cert /etc/letsencrypt
 $ sudo chmod -R g=rX /etc/letsencrypt
 ```
 
-Now add the gmail user to the ssl-cet group
+Now add the gmail user to the ssl-cert group
 
 ```
 $ sudo sudo usermod -a -G ssl-cert gmail
