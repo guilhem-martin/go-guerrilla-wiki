@@ -8,7 +8,7 @@ Create a user just for running the server, eg ‘gmail’ user:
 
 Place the guerrillad executable in the home directory (or any location of your choice, eg `/usr/local/bin` would be nice too)
 
-Edit the configuration [Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration) so that you have a server with your host name that is listening on your public IP, via port 25.
+Edit the configuration [Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration) - configure a server with your host-name that is listening on your public IP, via port 25.
 
 ### Permissions
 
