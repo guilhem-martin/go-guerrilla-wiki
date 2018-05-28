@@ -27,32 +27,57 @@ Copy `goguerrilla.conf.sample` to `goguerrilla.conf.json`
                 "is_enabled" : true, // boolean
                 "host_name":"mail.test.com", // the hostname of the server as set by MX record
                 "max_size": 1000000, // maximum size of an email in bytes
-                "private_key_file":"/path/to/pem/file/test.com.key",  // full path to pem file private key
-                "public_key_file":"/path/to/pem/file/test.com.crt", // full path to pem file certificate
                 "timeout":180, // timeout in number of seconds before an idle connection is closed
                 "listen_interface":"127.0.0.1:25", // listen on ip and port
-                "start_tls_on":true, // supports the STARTTLS command?
-                "tls_always_on":false, // always connect using TLS? If true, start_tls_on will be false
                 "max_clients": 1000, // max clients at one time
-                "log_file":"/dev/stdout" // optional. Can be "off", "stderr", "stdout" or any path to a file. Will use global setting of empty.
+                "log_file":"/dev/stdout", // optional. Can be "off", "stderr", "stdout" or any path to a file. Will use global setting of empty.
+                "tls" : { // optional, recommended
+                    "start_tls_on":true, // supports the STARTTLS command?
+                    "tls_always_on":false, // always connect using TLS? If true, start_tls_on will be false
+                    "private_key_file":"/path/to/pem/file/test.com.key",  // full path to pem file private key
+                    "public_key_file":"/path/to/pem/file/test.com.crt", // full path to pem file certificate
+                    "protocols" : ["tls1.0", "tls1.2"], // minimum protocol on the left, maximum on the right
+                    // the following is a list of cipher suites to use.
+                    "ciphers" : ["TLS_FALLBACK_SCSV", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 
+                        "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305", "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305", 
+                        "TLS_RSA_WITH_RC4_128_SHA", "TLS_RSA_WITH_AES_128_GCM_SHA256", 
+                        "TLS_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA", 
+                        "TLS_ECDHE_RSA_WITH_RC4_128_SHA", "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256", 
+                        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"],
+                    "curves" : ["P256", "P384", "P521", "X25519"],
+                    "prefer_server_cipher_suites" : true
+                }
             },
             // the following is a second server, but listening on port 465 and always using TLS
             {
                 "is_enabled" : true,
                 "host_name":"mail.test.com",
                 "max_size":1000000,
-                "private_key_file":"/path/to/pem/file/test.com.key",
-                "public_key_file":"/path/to/pem/file/test.com.crt",
+                
                 "timeout":180,
                 "listen_interface":"127.0.0.1:465",
-                "start_tls_on":false,
-                "tls_always_on":true,
-                "max_clients":500
+                
+                "max_clients":500,
+                "tls" : {
+                    "start_tls_on":false,
+                    "tls_always_on":true,
+                    "private_key_file":"/path/to/pem/file/test.com.key",
+                    "public_key_file":"/path/to/pem/file/test.com.crt",
+                    "protocols" : ["tls1.0", "tls1.2"],
+                    "ciphers" : ["TLS_FALLBACK_SCSV", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 
+                        "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305", "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305", 
+                        "TLS_RSA_WITH_RC4_128_SHA", "TLS_RSA_WITH_AES_128_GCM_SHA256", 
+                        "TLS_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA", 
+                        "TLS_ECDHE_RSA_WITH_RC4_128_SHA", "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256", 
+                        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"],
+                    "curves" : ["P256", "P384", "P521", "X25519"],
+                    "prefer_server_cipher_suites" : true
+                }
             }
             // repeat as many servers as you need
         ]
     }
-    }
+    
 
 The Json parser is very strict on syntax. If there's a parse error and it
 doesn't give much clue, then test your syntax here:
