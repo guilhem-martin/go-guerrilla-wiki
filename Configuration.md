@@ -98,7 +98,7 @@ If any of the following settings are absent, GO's defaults will be used.
 
 The `protocols` setting is an array with just two elements.
 The first element is the minimum protocol version, the second is the maximum. 
-Avoid ssl3.0.
+Avoid ssl3.0. All lowercase.
 
 * ssl3.0
 * tls1.0
