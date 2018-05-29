@@ -105,6 +105,10 @@ Avoid ssl3.0. All lowercase.
 * tls1.1
 * tls1.2
 
+Example
+
+`"protocols" : ["tls1.0", "tls1.2"]`
+
 ##### Ciphers
 
 Here is a list of cipher suites that can be used. Note that `TLS_FALLBACK_SCSV`
@@ -138,6 +142,18 @@ Since Go 1.8 -
 * TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
 * TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
 
+Example
+
+```
+"ciphers" : ["TLS_FALLBACK_SCSV", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 
+    "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305", "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305", 
+    "TLS_RSA_WITH_RC4_128_SHA", "TLS_RSA_WITH_AES_128_GCM_SHA256", 
+    "TLS_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA", 
+    "TLS_ECDHE_RSA_WITH_RC4_128_SHA", "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256", 
+    "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"],
+                    
+```
+
 ##### Curves
 
 `curves` contains the elliptic curves that will be used in an ECDHE handshake, 
@@ -150,6 +166,10 @@ in preference order.
 Since Go 1.8 -
 
 * X25519
+
+Example
+
+`"curves" : ["P256", "P384", "P521", "X25519"]`
 
 ### Backend Configuration
 
