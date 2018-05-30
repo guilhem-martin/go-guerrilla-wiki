@@ -113,7 +113,7 @@ Example
 
 Here is a list of cipher suites that can be used. Note that `TLS_FALLBACK_SCSV`
 is not a cipher, but should be included to prevent downgrade attacks.
-Generally, avoid CBC when you can.
+Generally, avoid CBC when you can, and possibly 3DES.
 
 * TLS_RSA_WITH_3DES_EDE_CBC_SHA
 * TLS_RSA_WITH_AES_128_CBC_SHA
