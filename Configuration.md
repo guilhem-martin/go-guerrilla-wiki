@@ -7,9 +7,8 @@ The configuration is in strict JSON format. Here is an annotated configuration.
 
 To get started, copy [goguerrilla.conf.sample](https://github.com/flashmob/go-guerrilla/blob/master/goguerrilla.conf.sample) to `goguerrilla.conf.json`
 
-
     {
-        "allowed_hosts": ["guerrillamail.com","guerrillamailblock.com","sharklasers.com","guerrillamail.net","guerrillamail.org"], // What hosts to accept
+        "allowed_hosts": ["guerrillamail.com","guerrillamailblock.com","sharklasers.com","guerrillamail.net","guerrillamail.org"], // What hosts to accept. Supports wildcards *.
         "pid_file" : "/var/run/go-guerrilla.pid", // pid = process id, so that other programs can send signals to our server
         "log_file" : "stderr", // can be "off", "stderr", "stdout" or any path to a file
         "log_level" : "info", // can be  "debug", "info", "error", "warn", "fatal", "panic"
@@ -79,6 +78,14 @@ To get started, copy [goguerrilla.conf.sample](https://github.com/flashmob/go-gu
         ]
     }
     
+
+#### Notes
+
+
+`allowed_hosts` - supports wildcards for subdomains, eg `*.example.com`. MX Records
+with wildcards are supported, according to [RCF1912](https://tools.ietf.org/html/rfc1912#section-2.7)
+If you have a custom backend, and you would like to have your backend decide if the host is allowed, you
+can turn off this feature by configuring with a single dot - `.`
 
 The Json parser is very strict on syntax. If there's a parse error and it
 doesn't give much clue, then test your syntax here:
