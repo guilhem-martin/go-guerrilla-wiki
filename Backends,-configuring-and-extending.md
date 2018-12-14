@@ -84,7 +84,7 @@ the use of a processor that can both validate recipients and save mail/
 
 As detailed above, the gateway distributes the envelope to process via the **conveyor** channel.
 The envelope is submitted to the gateway via the `Process` function. If the email is not
-processed in time, it will return with an error. Currently the defaul is to 30 seconds.
+processed in time, it will return with an error. Currently the default is to 30 seconds.
 
 The default can be customized via Backend config:
 
