@@ -7,7 +7,7 @@ To get started, import the guerrilla package to your project.
 
 ```go
 import (
-	"github.com/flashmob/go-guerrilla/guerrilla"
+	"github.com/flashmob/go-guerrilla"
 )
 ```
 
