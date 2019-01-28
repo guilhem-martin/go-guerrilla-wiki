@@ -48,7 +48,7 @@ Same as above, except here things get more interesting as we start configuring
 
 ```go
 import (
-        "github.com/flashmob/go-guerrilla/guerrilla"
+        "github.com/flashmob/go-guerrilla"
         "github.com/flashmob/go-guerrilla/log"
 )
 
