@@ -10,6 +10,7 @@
    - [Log file rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate)
    - [Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration)
    - [Using Nginx as a proxy](https://github.com/flashmob/go-guerrilla/wiki/Using-Nginx-as-a-proxy)
+   - [The Dashboard](https://github.com/flashmob/go-guerrilla/wiki/The-Dashboard)
 - Developing / Extending
    - [Using as a package](https://github.com/flashmob/go-guerrilla/wiki/Using-as-a-package)
    - [Backends](https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending)
