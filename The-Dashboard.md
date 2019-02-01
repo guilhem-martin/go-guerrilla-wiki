@@ -1,4 +1,4 @@
-# Dashboard
+# About the Dashboard
 
 The dashboard package gathers data about Guerrilla while it is running 
 and provides an analytics web dashboard. To activate the dashboard, checkout
