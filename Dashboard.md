@@ -20,6 +20,10 @@ $ make guerrillad
 
 Then see the Config section below how to enable it!
 
+## Screenshot
+
+![](https://cloud.githubusercontent.com/assets/10557821/23277291/233efc0c-f9c2-11e6-8374-f2515f7d868c.png)
+
 ## The Backend
 
 The backend is a Go package that collects and stores data from guerrillad, 
