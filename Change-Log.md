@@ -1,3 +1,5 @@
+Note: This file is outdated (written in 2016), please see recently merged pull requests. Current master branch version is 1.6.0 and contains all changes below
+
 (Master branch - Release Candidate 1 for v2.0)
 Large refactoring of the code. 
 - Introduced "backends": modular architecture for saving email
