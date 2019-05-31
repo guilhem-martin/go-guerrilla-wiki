@@ -178,7 +178,7 @@ var MyFooProcessor = func() backends.Decorator {
 	// our initFunc will load the config.
 	initFunc := backends.InitializeWith(func(backendConfig backends.BackendConfig) error {
 		configType := backends.BaseConfig(&myFooConfig{})
-		bcfg, err := backends.Service.ExtractConfig(backendConfig, configType)
+		bcfg, err := backends.Svc.ExtractConfig(backendConfig, configType)
 		if err != nil {
 			return err
 		}
