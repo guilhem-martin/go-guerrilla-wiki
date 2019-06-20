@@ -106,6 +106,23 @@ or your system could populate later in the pipeline.
 
 By there's an index on `to` `hash` and `date`. Adding indexes may reduce insert performance, it's up to whenever you want to keep these or not, or add more. 
 
+### Non-MySQL databases
+
+You can customize the insert query so that it's compatible with non-MySQL databases.
+
+Eg.
+
+- What if backticks need to be replaced with double quotes?
+- What if ? placeholders need to be replaced with $x, where x increments.
+(From discussion in issue #145 https://github.com/flashmob/go-guerrilla/issues/145)
+
+Use the following settings in your config file:
+
+`SQLInsert` - specifies the columns for the query
+`SQLValues` - specifies the values, as the name implies.
+
+
+
 ### Changes
 
 #### 2018-03-09 - Allow SQL backend use alternative drivers. Issue #94
