@@ -2,7 +2,7 @@
 ### Prerequisites
 
 
-Assuming you have Redis and SQL already installed for this example. (Or SQL driver of your choice)
+Assuming you have Redis and SQL already installed for this example. (Or SQL driver of your choice, see "Non MySQL" section below how to configure for other SQL dialects!)
 
 ### Configuration
 
