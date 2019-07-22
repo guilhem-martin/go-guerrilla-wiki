@@ -17,7 +17,7 @@ To get started, copy [goguerrilla.conf.sample](https://github.com/flashmob/go-gu
                 "log_received_mails": true,
                 "save_workers_size": 1,
                 "save_process" : "HeadersParser|Header|Debugger", // chain of processors to be executed when saving email
-                "validate_process" "", // similar to save_process, chain of processors that validate a recipient
+                "validate_process": "", // similar to save_process, chain of processors that validate a recipient
                 "primary_mail_host" : "mail.example.com", // used by the Header processor. 
                 "gw_save_timeout" : "30s", // how long before giving up on saving an email (optional, default 30s)
                 "gw_val_rcpt_timeout" : "3s" // how long before giving up in validating a recipient (optional, default 5s)
