@@ -118,8 +118,8 @@ Eg.
 
 Use the following settings in your config file:
 
-`SQLInsert` - specifies the columns for the query
-`SQLValues` - specifies the values, as the name implies.
+`sql_insert` - specifies the columns for the query
+`sql_values` - specifies the values, as the name implies.
 
 
 
