@@ -34,7 +34,17 @@ Note that the SQL & Redis processors is rely on the following processors:
 - HeadersParser` for header parsing, to get such fields as the Subject, To and Reply-to headers, but doesn't really need it. 
 - The Hasher is used to derive the redis key for storing the email body. 
 - The `Compressor` doesn't actually compress anything, it just sets up a compressor that the Redis or SQL processor will use if they find that it was set.
-- The 'Header' will fill the envelope with delivery header fields, so that when the body is saved with the delievry header fields.
+- The 'Header' will fill the envelope with delivery header fields, so that when the body is saved with the delivery header fields.
+
+#### Additional SQL driver options
+
+The following options are available in your config:
+
+**sql_max_open_conns** - sets the maximum number of open connections to the database. The default is 0 (unlimited).
+
+**sql_max_idle_conns** - sets the maximum number of connections in the idle connection pool. The default is 2.
+
+**sql_max_conn_lifetime** - sets the maximum amount of time a connection may be reused.
 
 ### SQL table setup
 
