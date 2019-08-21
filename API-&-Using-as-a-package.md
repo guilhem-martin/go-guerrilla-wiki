@@ -11,7 +11,7 @@ import (
 )
 ```
 
-You may use `$ go get ./...` to get all dependencies, also go-guerrilla uses [glide](https://github.com/Masterminds/glide) for dependency management.
+You may use [go dep](https://github.com/golang/dep) to get all the dependencies.
 
 ### Starting a server
 
