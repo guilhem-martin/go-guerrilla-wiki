@@ -38,7 +38,7 @@ Note that the SQL & Redis processors is rely on the following processors:
 
 #### Additional SQL driver options
 
-The following options are available in your config:
+The following options are available in your config since 2019-08-19:
 
 **sql_max_open_conns** - sets the maximum number of open connections to the database. The default is 0 (unlimited).
 
