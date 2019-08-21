@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `new` (
   KEY `to` (`to`),
   KEY `hash` (`hash`),
   KEY `date` (`date`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 ```
 
 #### mail_id and message_id
