@@ -38,7 +38,7 @@ To get started, copy [goguerrilla.conf.sample](https://github.com/flashmob/go-gu
                     "public_key_file":"/path/to/pem/file/test.com.crt", // full path to pem file certificate
                     "protocols" : ["tls1.0", "tls1.2"], // minimum protocol on the left, maximum on the right
                     // the following is a list of cipher suites to use.
-                    "ciphers" : ["TLS_FALLBACK_SCSV", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 
+                    "ciphers" : ["TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 
                         "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305", "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305", 
                         "TLS_RSA_WITH_RC4_128_SHA", "TLS_RSA_WITH_AES_128_GCM_SHA256", 
                         "TLS_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA", 
@@ -64,7 +64,7 @@ To get started, copy [goguerrilla.conf.sample](https://github.com/flashmob/go-gu
                     "private_key_file":"/path/to/pem/file/test.com.key",
                     "public_key_file":"/path/to/pem/file/test.com.crt",
                     "protocols" : ["tls1.0", "tls1.2"],
-                    "ciphers" : ["TLS_FALLBACK_SCSV", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 
+                    "ciphers" : ["TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 
                         "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305", "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305", 
                         "TLS_RSA_WITH_RC4_128_SHA", "TLS_RSA_WITH_AES_128_GCM_SHA256", 
                         "TLS_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA", 
@@ -107,10 +107,11 @@ The `protocols` setting is an array with just two elements.
 The first element is the minimum protocol version, the second is the maximum. 
 Avoid ssl3.0. All lowercase.
 
-* ssl3.0
+* ssl3.0 (to be removed in Go 1.14)
 * tls1.0
 * tls1.1
 * tls1.2
+* tls1.3 (since Go 1.13)
 
 Example
 
@@ -138,7 +139,7 @@ Generally, avoid CBC when you can, and possibly 3DES.
 * TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
 * TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 * TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
-* TLS_FALLBACK_SCSV
+* TLS_FALLBACK_SCSV (Used only with SSLv3, to be removed in Go 1.14)
 
 Since Go 1.8 -
 
@@ -152,7 +153,7 @@ Since Go 1.8 -
 Example
 
 ```
-"ciphers" : ["TLS_FALLBACK_SCSV", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 
+"ciphers" : ["TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 
     "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305", "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305", 
     "TLS_RSA_WITH_RC4_128_SHA", "TLS_RSA_WITH_AES_128_GCM_SHA256", 
     "TLS_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_ECDSA_WITH_RC4_128_SHA", 
