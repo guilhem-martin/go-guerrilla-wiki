@@ -4,8 +4,9 @@ Roadmap for 2020
 - Make the logrus dependency softer and have the ability to bring-your-own logger (Several proposals and PoC have been added already)
 - improve some of the logged messages with more structure for easier parsing
 - Support internationalized email addresses, and better 8bitmime support
-- (Maybe?) Steam based DKIM verification
 - Better tools for parsing of MIME, transforming encoding & storage deduplication
+- (Maybe?) Steam based DKIM verification
+- (Maybe?) Website and a forum
 
 
 Bounties
