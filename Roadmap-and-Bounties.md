@@ -1,11 +1,18 @@
+Roadmap for 2020
+========
+- Introduce a new streaming backend architecture. See progress https://github.com/flashmob/go-guerrilla/pull/135
+- Make the logrus dependency softer and have the ability to bring-your-own logger (Several proposals and PoC have been added already)
+- improve some of the logged messages with more structure for easier parsing
+- Support internationalized email addresses, and better 8bitmime support
+- (Maybe?) Steam based DKIM verification
+- Better tools for parsing of MIME, transforming encoding & storage deduplication
+
 
 Bounties
 ===========
 
 To encourage more development, we are now offering bounties 
-funded from our b̶i̶t̶c̶o̶i̶n̶ Ethereum donation address:
-
-`0x86aDA9f4FB7b547053346d5E96B29370405d05CE` or `guerrillamail.eth`
+funded from our ETH fund.
 
 So far we have the following bounties that are still open:
 (Updated 12 Mar 2017)
@@ -31,11 +38,3 @@ Please open an issue for more clarification / details on Github.
 
 Also, welcome your suggestions for adding things to this Roadmap - please open an issue.
 
-Another way to contribute is to donate to our ethereum address to help
-us fund more bounties!
-
-`0x86aDA9f4FB7b547053346d5E96B29370405d05CE` - Ether and also any other type of tokens are welcome.
-
-Note: Due to high fees & network congestion which make bitcoin impractical for small transactions, in the future, 
-bounty payouts will be moving to Ethereum. The bitcoin address will be drained first,
-and then switch the bounty awards to quote in ETH.
