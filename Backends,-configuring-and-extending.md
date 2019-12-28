@@ -52,7 +52,15 @@ The Gateway requires the following settings:
 - `save_process` - this a processor for saving email, composed by chaining the smaller processors together. 
 Each processor name is separated by a `|` character and is executed left-to-right. It is called when we receive mail data from a client.
 - `validate_process` - (optional) similar to `save_process`, but for validating recipients. It is called when we receive recipients from a client.
-- `save_workers_size` - how many workers to spawn
+- `save_workers_size` - how many workers to spawn. Usually just a handful of workers can handle hundreds 
+of clients at a time. Fine tune this by setting to a low value, then observe your server's load average while processing incoming mail. If the load average is OK, slowly increase the value and repeat the steps. 
+An interesting observation is that even if say you have a thousand connections from 1k clients, you only usually
+need a handful of workers to handle them all.
+
+A note about Goroutines: Those that are coming to Go for the first time may notice that when they
+view the process list from their OS, they still see the same number of go processes, despite changing the 
+`save_workers_size` setting. The workers still run in parallel, however, this is not visible to the
+OS since Go programs run in their own runtime which has its own scheduler that manages goroutines, hence invisible to the OS.
 
 Then add any other settings that each processor may require.
 ```json
