@@ -1,4 +1,4 @@
-Note: This file is outdated (written in 2016), please see recently merged pull requests. Current master branch version is 1.6.0 and contains all changes below
+Note: This file is outdated (written in 2016), please see recently merged pull requests. Current master branch version is 1.6.1 and contains all changes below
 
 (Master branch - Release Candidate 1 for v2.0)
 Large refactoring of the code. 
@@ -10,6 +10,7 @@ Large refactoring of the code.
 - Incompatible change: The server's command is now a command called `guerrillad`
 - Config re-loading via SIGHUP: reload TLS, add/remove/enable/disable servers, change allowed hosts, timeout.
 - Begin writing automated tests
+- Plus all the pull requests since 6th Jan, https://github.com/flashmob/go-guerrilla/pulls?q=is%3Apr+is%3Aclosed
  
 
 1.5.1 - 4nd Nov 2016 (Latest tagged release)
