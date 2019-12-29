@@ -1,4 +1,16 @@
 
+### Quick Start
+
+(assuming Go and Dep is available with default paths)
+
+$ go get github.com/flashmob/go-guerrilla
+$ cd ~/go/src/github.com/flashmob/go-guerrilla
+$ dep ensure
+$ make test
+$ make guerrillad
+
+Then head over to the configuration https://github.com/flashmob/go-guerrilla/wiki/Configuration
+
 ### Build prerequisites
 
 This project requires the following tools to build: GNU Make and ~~Glide~~Go's "Dep" dependency manager.
