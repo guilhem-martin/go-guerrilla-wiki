@@ -1,7 +1,7 @@
 
 ### Quick Start
 
-(assuming Go and Dep is available with default paths)
+(assuming Go and Dep are available)
 ```
 $ go get github.com/flashmob/go-guerrilla
 $ cd ~/go/src/github.com/flashmob/go-guerrilla
