@@ -1,5 +1,8 @@
 ### Using Nginx as a proxy
 
+
+Note: This release temporarily does not have proxy support.
+An issue has been opened to put back in https://github.com/flashmob/go-guerrilla/issues/30
 Nginx can be used to proxy SMTP traffic for GoGuerrilla SMTPd
 
 Why proxy SMTP with Nginx?
