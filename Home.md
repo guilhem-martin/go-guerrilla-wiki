@@ -12,7 +12,7 @@
    - [Using Nginx as a proxy](https://github.com/flashmob/go-guerrilla/wiki/Using-Nginx-as-a-proxy)
    - [The Dashboard](https://github.com/flashmob/go-guerrilla/wiki/The-Dashboard)
 - Developing / Extending
-   - [Using as a package](https://github.com/flashmob/go-guerrilla/wiki/Using-as-a-package)
+   - [Using as a package](https://github.com/flashmob/go-guerrilla/wiki/API-&-Using-as-a-package)
    - [Backends](https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending)
    - [Roadmap and Bounties](https://github.com/flashmob/go-guerrilla/wiki/Roadmap-and-Bounties)
 - Testing
