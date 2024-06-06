@@ -1,6 +1,11 @@
-Note: This file is outdated (written in 2016), please see recently merged pull requests. Current master branch version is 1.6.1 and contains all changes below
+1.6.6
+- Support of the PROXY command for HAProxy
+- Increased buffer size for header from 40KiB to ~10MiB
 
-(Master branch - Release Candidate 1 for v2.0)
+1.6.5
+Takeover of the project by phires
+
+1.6.0
 Large refactoring of the code. 
 - Introduced "backends": modular architecture for saving email
 - Issue: Use as a package in your own projects! https://github.com/flashmob/go-guerrilla/issues/20
