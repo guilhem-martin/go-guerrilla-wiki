@@ -5,7 +5,7 @@ Configuration
 
 The configuration is in strict JSON format. Here is an annotated configuration.
 
-To get started, copy [goguerrilla.conf.sample](https://github.com/flashmob/go-guerrilla/blob/master/goguerrilla.conf.sample) to `goguerrilla.conf.json`
+To get started, copy [goguerrilla.conf.sample](https://github.com/phires/go-guerrilla/blob/master/goguerrilla.conf.sample) to `goguerrilla.conf.json`
 
     {
         "allowed_hosts": ["guerrillamail.com","guerrillamailblock.com","sharklasers.com","guerrillamail.net","guerrillamail.org"], // What hosts to accept. Supports wildcards *.
@@ -105,9 +105,9 @@ If any of the following settings are absent, GO's defaults will be used.
 
 The `protocols` setting is an array with just two elements.
 The first element is the minimum protocol version, the second is the maximum. 
-Avoid ssl3.0. All lowercase.
+All lowercase.
+ssl3.0 has be deprecated and was removed in version 1.6.6
 
-* ssl3.0 (to be removed in Go 1.14)
 * tls1.0
 * tls1.1
 * tls1.2
@@ -178,9 +178,6 @@ in preference order.
 * P256
 * P384
 * P521
-
-Since Go 1.8 -
-
 * X25519
 
 Example
@@ -190,7 +187,7 @@ Example
 ### Backend Configuration
 
 backend configuration details here:
-https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending
+https://github.com/phires/go-guerrilla/wiki/Backends,-configuring-and-extending
 
 #### Saving to MySQL & Redis
-Here is the page discussing how to configure saving to [Redis and MySQL](https://github.com/flashmob/go-guerrilla/wiki/Configuration-example:-save-to-Redis-&-MySQL): 
+Here is the page discussing how to configure saving to [Redis and MySQL](https://github.com/phires/go-guerrilla/wiki/Configuration-example:-save-to-Redis-&-MySQL): 
