@@ -10,6 +10,7 @@
    - [Log file rotation](https://github.com/phires/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate)
    - [Configuration](https://github.com/phires/go-guerrilla/wiki/Configuration)
    - [Using Nginx as a proxy](https://github.com/phires/go-guerrilla/wiki/Using-Nginx-as-a-proxy)
+   - [Using HAProxy](https://github.com/phires/go-guerrilla/wiki/Using-HAProxy)
    - [The Dashboard](https://github.com/phires/go-guerrilla/wiki/The-Dashboard)
 - Developing / Extending
    - [Using as a package](https://github.com/phires/go-guerrilla/wiki/API-&-Using-as-a-package)
