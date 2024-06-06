@@ -1,4 +1,4 @@
-1.6.6
+1.6.6 - 6 June 2024
 - Support of the PROXY command for HAProxy
 - Increased buffer size for header from 40KiB to ~10MiB
 
