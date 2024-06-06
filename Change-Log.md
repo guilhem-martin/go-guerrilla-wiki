@@ -18,7 +18,7 @@ Large refactoring of the code.
 - Plus all the pull requests since 6th Jan, https://github.com/flashmob/go-guerrilla/pulls?q=is%3Apr+is%3Aclosed
  
 
-1.5.1 - 4nd Nov 2016 (Latest tagged release)
+1.5.1 - 4nd Nov 2016
 - Small optimizations to the way email is saved
 
 1.5 - 2nd Nov 2016
