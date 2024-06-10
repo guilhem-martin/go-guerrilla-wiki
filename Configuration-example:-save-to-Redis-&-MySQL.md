@@ -124,7 +124,7 @@ Eg.
 
 - What if backticks need to be replaced with double quotes?
 - What if ? placeholders need to be replaced with $x, where x increments.
-(From discussion in issue #145 https://github.com/flashmob/go-guerrilla/issues/145)
+(From discussion in issue #145 https://github.com/phires/go-guerrilla/issues/145)
 
 Use the following settings in your config file:
 

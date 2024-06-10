@@ -33,7 +33,7 @@ write out the process-id (pid) to a file.
 
 Use `kill -USR1 <process-id>`
 
-This is used for [log rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate).
+This is used for [log rotation](https://github.com/phires/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate).
 
 ### Examples 
 

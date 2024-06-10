@@ -1,6 +1,6 @@
 ## Deploying guerrillad on a POSIX system (Linux/Darwin/BSD/etc)
 
-Assuming that you have [built the binary](https://github.com/flashmob/go-guerrilla/wiki/Build-Notes) already, it's now ready to deploy to production. The following document is a suggestion for deploying in production.
+Assuming that you have [built the binary](https://github.com/phires/go-guerrilla/wiki/Build-Notes) already, it's now ready to deploy to production. The following document is a suggestion for deploying in production.
 
 ### Create a special user 
 
@@ -10,7 +10,7 @@ Create a user just for running the server, eg ‘gmail’ user:
 
 Place the guerrillad executable in the home directory (or any location of your choice, eg `/usr/local/bin` would be nice too)
 
-Edit the configuration [Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration) - configure a server with your host-name that is listening on your public IP, via port 25.
+Edit the configuration [Configuration](https://github.com/phires/go-guerrilla/wiki/Configuration) - configure a server with your host-name that is listening on your public IP, via port 25.
 
 ### Permissions
 
@@ -82,10 +82,10 @@ $ sudo sudo usermod -a -G ssl-cert gmail
 ```
 
 ### See also
-[Configuration](https://github.com/flashmob/go-guerrilla/wiki/Configuration)
+[Configuration](https://github.com/phires/go-guerrilla/wiki/Configuration)
 
-[Log file rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate)
+[Log file rotation](https://github.com/phires/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate)
 
-[Use Nginx as a proxy](https://github.com/flashmob/go-guerrilla/wiki/Using-Nginx-as-a-proxy)
+[Use Nginx as a proxy](https://github.com/phires/go-guerrilla/wiki/Using-Nginx-as-a-proxy)
 
-[Build Notes](https://github.com/flashmob/go-guerrilla/wiki/Build-Notes)
+[Build Notes](https://github.com/phires/go-guerrilla/wiki/Build-Notes)

@@ -13,7 +13,7 @@ The number of workers to start can be controlled by changing the backend's `save
 
 ### Gateway internals
 
-The Gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **conveyor** channel and picked up by an available _Worker_. The envelope is a value of `github.com/flashmob/go-guerrilla/envelope.Envelope` it's passed as a pointer. Users of the package don't need to be concerned with the conveyor channel details, only use the exposed Process function provided by the gateway, and it takes care of the rest.
+The Gateway receives new email envelopes from the server via the Process function. These envelopes are passed via the gateway's **conveyor** channel and picked up by an available _Worker_. The envelope is a value of `github.com/phires/go-guerrilla/envelope.Envelope` it's passed as a pointer. Users of the package don't need to be concerned with the conveyor channel details, only use the exposed Process function provided by the gateway, and it takes care of the rest.
 
 The Gateway can perform different tasks, not only save email. Another function it provides is `ValidateRcpt` which validates the envelope's last recipient pushed. It still uses the conveyor channel to distribute the work, and the `task` field in the `workerMsg` 
 
@@ -31,7 +31,7 @@ The decorator pattern stacks each Processor on a call-stack, making a single Pro
 
 Here is the interface of a processor
 ```go
-import "github.com/flashmob/go-guerrilla/mail"
+import "github.com/phires/go-guerrilla/mail"
 
 // Our processor is defined as something that processes the envelope and returns a result and error
 type Processor interface {
@@ -106,8 +106,8 @@ For formatting options for the duration string, see Go's [time.ParseDuration](ht
 The decorator pattern makes it easy to create your own Processors. To get started, create a new `.go` file, then import
 ```go
 import (
-   "github.com/flashmob/go-guerrilla/backends"
-   "github.com/flashmob/go-guerrilla/mail"
+   "github.com/phires/go-guerrilla/backends"
+   "github.com/phires/go-guerrilla/mail"
 )
 ```
 From there, if your processor needs a configuration, define your own configuration struct. The struct can only have string, float or numeric fields. Each field must be public and be annotated with a [struct tag](http://stackoverflow.com/questions/10858787/what-are-the-uses-for-tags-in-go) to map it to the json file. eg.

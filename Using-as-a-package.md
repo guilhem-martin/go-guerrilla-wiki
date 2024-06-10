@@ -1,1 +1,1 @@
-Moved to https://github.com/flashmob/go-guerrilla/wiki/API-&-Using-as-a-package
+Moved to https://github.com/phires/go-guerrilla/wiki/API-&-Using-as-a-package

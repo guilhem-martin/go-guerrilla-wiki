@@ -3,13 +3,13 @@
 
 (assuming Go and Dep are available)
 ```
-$ go get github.com/flashmob/go-guerrilla
-$ cd ~/go/src/github.com/flashmob/go-guerrilla
+$ go get github.com/phires/go-guerrilla
+$ cd ~/go/src/github.com/phires/go-guerrilla
 $ dep ensure
 $ make test
 $ make guerrillad
 ```
-Then head over to the configuration https://github.com/flashmob/go-guerrilla/wiki/Configuration
+Then head over to the configuration https://github.com/phires/go-guerrilla/wiki/Configuration
 
 ### Build prerequisites
 
@@ -44,12 +44,12 @@ There are currently two alternatives. One, is to use the GNU iconv libray, which
 The other is to use `golang.org/x/net/html/charset`. 
 
 The end-user of the internal `mail` package can specify which to use by either importing:
-`github.com/flashmob/go-guerrilla/mail/iconv`
-or `github.com/flashmob/go-guerrilla/mail/encoding`
+`github.com/phires/go-guerrilla/mail/iconv`
+or `github.com/phires/go-guerrilla/mail/encoding`
 
 Also, use the underscore `_` character in front of the import. 
 
-For an example, see `cmd/guerrillad/serve.go` - it imports `github.com/flashmob/go-guerrilla/mail/encoding` which causes the `MimeHeaderDecode` function to use `golang.org/x/net/html/charset`
+For an example, see `cmd/guerrillad/serve.go` - it imports `github.com/phires/go-guerrilla/mail/encoding` which causes the `MimeHeaderDecode` function to use `golang.org/x/net/html/charset`
 
 ### Getting errors when building with iconv?
 

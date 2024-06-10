@@ -7,7 +7,7 @@ To get started, import the guerrilla package to your project.
 
 ```go
 import (
-	"github.com/flashmob/go-guerrilla"
+	"github.com/phires/go-guerrilla"
 )
 ```
 
@@ -48,8 +48,8 @@ Same as above, except here things get more interesting as we start configuring
 
 ```go
 import (
-        "github.com/flashmob/go-guerrilla"
-        "github.com/flashmob/go-guerrilla/log"
+        "github.com/phires/go-guerrilla"
+        "github.com/phires/go-guerrilla/log"
 )
 
 cfg := &guerrilla.AppConfig{LogFile: log.OutputOff.String()}
@@ -63,7 +63,7 @@ if err != nil {
 
 ```
 
-Here we've set the Daemon's `Config` field with an instance of `AppConfig` type with our own setting for the `LogFile` field. We had to import `github.com/flashmob/go-guerrilla/log` to get the `log.OutputOff`. `LogFile` could also be a string to a path, or set it with `log.log.OutputStderr.String()`, or `log.OutputStdout.String()`
+Here we've set the Daemon's `Config` field with an instance of `AppConfig` type with our own setting for the `LogFile` field. We had to import `github.com/phires/go-guerrilla/log` to get the `log.OutputOff`. `LogFile` could also be a string to a path, or set it with `log.log.OutputStderr.String()`, or `log.OutputStdout.String()`
 
 ***
 
@@ -195,7 +195,7 @@ is from the Header processor.
 Notice that we instantiated a new `bcfg` variable and initialized with a literal, just like initializing a map. 
 The keys of the map correspond the jason struct stags, these struct tags are defined in individual `Processor` components. (The above components are defined in the backend package, go file names prefixed with 'p_'.
 
-See the [Backends Documentation](https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending) for more information.
+See the [Backends Documentation](https://github.com/phires/go-guerrilla/wiki/Backends,-configuring-and-extending) for more information.
 
 ####  Backend Configuration
 
@@ -233,7 +233,7 @@ if err != nil {
 Use the `d.AddProcessor` function to register your processor with the daemon.
 
 Processors allow you to extend the backend. See the 
-[Backends Documentation](https://github.com/flashmob/go-guerrilla/wiki/Backends,-configuring-and-extending) for more information.
+[Backends Documentation](https://github.com/phires/go-guerrilla/wiki/Backends,-configuring-and-extending) for more information.
 
 
 ***
@@ -354,7 +354,7 @@ Why would you want to reopen log files? A common way to rotate logs is to rename
 the file, and then tell the daemon to close the file descriptor and open a new one.
 This way no log entries are lost when the file is rotated. 
 
-Here is how you can [setup log rotation](https://github.com/flashmob/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate) using logrotate(8)
+Here is how you can [setup log rotation](https://github.com/phires/go-guerrilla/wiki/Automatic-log-file-management-with-logrotate) using logrotate(8)
 
 ***
 

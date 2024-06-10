@@ -8,7 +8,7 @@ The tests are all in the *fuzz.go* file if the tests branch.
 
 ### Branches
 
-The fuzz test lives in the [Test Branch](https://github.com/flashmob/go-guerrilla/tree/tests)
+The fuzz test lives in the [Test Branch](https://github.com/phires/go-guerrilla/tree/tests)
 
 We use a separate, as not everyone needs to run the fuzz tests, and there's a lot specific files. The files of interest are fuzz.go & fuzz_test.go, plus the 'corpus' data in the /workdir
 
@@ -42,7 +42,7 @@ go-fuzz package.
 
 See fuzz_test.go - run the TestGenerateCorpus test by itself to generate the corpus files, or add additional files there. The reason why a program is used to generate the corpus was because we couldn't use the text editor to insert non-printable characters that we want. For example, SMTP likes to have CR + LF at the end. To run TestGenerateCorpus by itself:
 
-`go test -v github.com/flashmob/go-guerrilla -run ^TestGenerateCorpus$`
+`go test -v github.com/phires/go-guerrilla -run ^TestGenerateCorpus$`
 
 The go-fuzz program will also generate its own corpus files during execution and leave them there so that it can resume the tests from where it left.
 
@@ -50,7 +50,7 @@ The go-fuzz program will also generate its own corpus files during execution and
 
 After everything is prepared you can start. Build the package with *go-fuzz*:
 
-`$ go-fuzz-build github.com/flashmob/go-guerrilla`
+`$ go-fuzz-build github.com/phires/go-guerrilla`
 
 This will take a while and create a file named *guerrilla-fuzz.zip*
 Now the fuzzing process itself can be started:

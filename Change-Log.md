@@ -8,14 +8,14 @@ Takeover of the project by phires
 1.6.0
 Large refactoring of the code. 
 - Introduced "backends": modular architecture for saving email
-- Issue: Use as a package in your own projects! https://github.com/flashmob/go-guerrilla/issues/20
-- Issue: Do not include dot-suffix in emails https://github.com/flashmob/go-guerrilla/issues/24
+- Issue: Use as a package in your own projects! https://github.com/phires/go-guerrilla/issues/20
+- Issue: Do not include dot-suffix in emails https://github.com/phires/go-guerrilla/issues/24
 - Logging functionality: logrus is now used for logging. Currently output is going to stdout
 - Incompatible change: Config's allowed_hosts is now an array
 - Incompatible change: The server's command is now a command called `guerrillad`
 - Config re-loading via SIGHUP: reload TLS, add/remove/enable/disable servers, change allowed hosts, timeout.
 - Begin writing automated tests
-- Plus all the pull requests since 6th Jan, https://github.com/flashmob/go-guerrilla/pulls?q=is%3Apr+is%3Aclosed
+- Plus all the pull requests since 6th Jan, https://github.com/phires/go-guerrilla/pulls?q=is%3Apr+is%3Aclosed
  
 
 1.5.1 - 4nd Nov 2016
