@@ -17,6 +17,7 @@
    - [Backends](https://github.com/phires/go-guerrilla/wiki/Backends,-configuring-and-extending)
    - [Roadmap and Bounties](https://github.com/phires/go-guerrilla/wiki/Roadmap-and-Bounties)
 - Testing
+   - [Manual Testing](https://github.com/phires/go-guerrilla/wiki/Manual-Testing)
    - [Fuzz Testing](https://github.com/phires/go-guerrilla/wiki/Fuzz-testing)
    - [Profiling](https://github.com/phires/go-guerrilla/wiki/Profiling)
 - [Random Dev notes](https://github.com/phires/go-guerrilla/wiki/Dev-Notes)
